@@ -11,6 +11,7 @@ import 'package:afya/pages/news.dart';
 import 'package:afya/setting/edit_profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +59,8 @@ class _HomePageState extends State<HomePage> {
 
   String currentMessage = "Afya ni mtaji 💪";
   Timer? _timer;
+  double rate = 1.0;
+
   @override
   void initState() {
     final data = context.read<ApiCalls>();
@@ -209,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                         fontFamily: 'Manane',
                         fontSize: 16,
-                        color: Color(0xff314165),
+                        color: Color(0xff262626),
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -245,107 +248,172 @@ class _HomePageState extends State<HomePage> {
                                         )));
                           },
                           child: Card(
+                              color: Color(0xffFFFFFF),
+                              elevation: 0,
                               child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ImageViewPage(
-                                              name:
-                                                  'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}',
-                                              imageUrl:
-                                                  'http://157.230.183.103${doctors[index]['image']}')));
-                                },
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      'http://157.230.183.103${doctors[index]['image']}',
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    margin: EdgeInsets.all(15),
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover)),
-                                  ),
-                                  placeholder: (context, url) => Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image:
-                                                AssetImage('assets/logo.jpg'))),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 200,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Text(
-                                      'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontFamily: 'Manane',
-                                          color: const Color(0xff1684A7),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 200,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    child: Text(
-                                      '${doctors[index]['specialize']} - ${doctors[index]['region']}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontFamily: 'Manane',
-                                        color: Color(0xff314165),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ImageViewPage(
+                                                  name:
+                                                      'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}',
+                                                  imageUrl:
+                                                      'http://157.230.183.103${doctors[index]['image']}')));
+                                    },
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'http://157.230.183.103${doctors[index]['image']}',
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        margin: EdgeInsets.all(15),
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover)),
+                                      ),
+                                      placeholder: (context, url) => Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/logo.jpg'))),
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 3),
-                                          child: Icon(
-                                            Icons.star,
-                                            size: 20,
-                                            color: Color(0xffF6EC72),
-                                          ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 200,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        child: Text(
+                                          'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}'
+                                              .toUpperCase(),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontFamily: 'Manane',
+                                              color: const Color(0xff262626),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Text(
-                                          '${average.toStringAsFixed(1)}  | ',
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '( MD )',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: Color(0xff314165),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: RatingBar.builder(
+                                                initialRating: 2,
+                                                direction: Axis.horizontal,
+                                                // allowHalfRating: true,
+                                                itemCount: 4,
+                                                itemSize: 15,
+                                                ignoreGestures: true,
+                                                itemBuilder: (context, _) =>
+                                                    Icon(
+                                                  Icons.diamond,
+                                                  color: Colors.red,
+                                                ),
+                                                onRatingUpdate: (rating) {
+                                                  rate = rating;
+                                                  // print(rate);
+                                                },
+                                              ),
+                                            ),
+                                            Text(
+                                              '',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: Color(0xff314165),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 200,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          '${doctors[index]['specialize']} - ${doctors[index]['region']}',
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily: 'Manane',
-                                            color: Color(0xff314165),
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12,
+                                            color: Color(0xff262626),
                                           ),
                                         ),
-                                        Text(
-                                          '${totalReview} Reviews',
+                                      ),
+                                      Container(
+                                        width: 200,
+                                        padding: const EdgeInsets.only(
+                                            left: 10, top: 5),
+                                        child: Text(
+                                          'TZS ${doctors[index]['price']}/= per person',
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily: 'Manane',
-                                            color: Color(0xff09A599),
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12,
+                                            color: Color(0xff262626),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 3),
+                                              child: Icon(
+                                                Icons.star,
+                                                size: 20,
+                                                color: Color(0xffF6EC72),
+                                              ),
+                                            ),
+                                            Text(
+                                              '${average.toStringAsFixed(1)}  | ',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: Color(0xff314165),
+                                              ),
+                                            ),
+                                            Text(
+                                              '${totalReview} Reviews',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: Color(0xff0071e7),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   )
                                 ],
-                              )
-                            ],
-                          )),
+                              )),
                         ),
                         SizedBox(
                           height: 5,
