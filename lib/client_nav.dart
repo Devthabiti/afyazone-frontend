@@ -128,10 +128,10 @@ class _ClientNavState extends State<ClientNav> {
             bottomNavigationBar: BottomNavigationBar(
                 currentIndex: pageIndex,
                 onTap: onTap,
-                fixedColor: const Color(0xffF6EC72),
+                fixedColor: const Color(0xff0071e7),
                 type: BottomNavigationBarType.fixed,
-                unselectedItemColor: const Color(0xffF6F6F6),
-                backgroundColor: const Color(0xff1684A7),
+                unselectedItemColor: const Color(0xff262626),
+                backgroundColor: const Color(0xffffffff),
                 elevation: 10,
                 showSelectedLabels: false,
                 showUnselectedLabels: false,

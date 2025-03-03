@@ -38,3 +38,10 @@ Future<void> main() async {
 ///white F6F6F6
 ///pupple 7743DB
 ///black 314165
+
+//new colors
+/// blue 0071e7
+/// red fe0002
+/// normal black 262626
+/// pure black 000000
+/// white FFFFFF
