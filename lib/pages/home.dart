@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:afya/carsole.dart';
@@ -24,6 +26,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<String> welcomeMessages = [
+    "Afya yako ni utajiri wako 💎",
+    "Kula vyakula vyenye virutubisho 🥗",
+    "Kunywa maji mengi kila siku 💧",
+    "Pumzika vya kutosha kwa afya bora 😴",
+    "Kuwa na furaha, afya yako inategemea hilo 😃",
+    "Epuka msongo wa mawazo 🧘‍♂️",
+    "Penda mwili wako, utajali afya yako ❤️",
+    "Tumia matunda na mboga kwa wingi 🍎",
+    "Afya bora huanzia na akili yenye utulivu 🧠",
+    "Tabasamu ni tiba ya moyo 😊",
+    "Hakikisha unapata usingizi wa kutosha 🌙",
+    "Punguza sukari kwa afya bora 🚫🍬",
+    "Epuka vyakula vya mafuta mengi 🍟",
+    "Zoezi ni dawa ya mwili 🏃‍♀️",
+    "Afya njema huleta maisha marefu 🌿",
+    "Tumia muda na wapendwa wako, ni tiba ya moyo 👨‍👩‍👧‍👦",
+    "Chagua afya leo kwa maisha bora kesho ⏳",
+    "Epuka uvutaji wa sigara kwa mapafu safi 🚭",
+    "Hakikisha unakula kiamsha kinywa kila siku 🍞",
+    "Tembea angalau dakika 30 kila siku 🚶‍♂️",
+    "Cheka mara nyingi, ni tiba asilia 😂",
+    "Kuwa na ratiba nzuri ya kula ⏰🍽️",
+    "Afya njema huleta nguvu ya kufanya kazi 💪",
+    "Epuka kunywa pombe kupita kiasi 🚫🍷",
+    "Usafi wa mwili huimarisha kinga yako 🛁",
+    "Fanya uchunguzi wa afya mara kwa mara 🏥",
+    "Afya njema huanza na maamuzi mazuri ✅",
+  ];
+
+  String currentMessage = "Afya ni mtaji 💪";
+  Timer? _timer;
   @override
   void initState() {
     final data = context.read<ApiCalls>();
@@ -32,7 +66,27 @@ class _HomePageState extends State<HomePage> {
     data.fetcharticles();
     data.fetchads();
 
+    _startTimer();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed to avoid memory leaks
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  // Function to start the timer
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      setState(() {
+        // Update the current message with a random one from the list
+        currentMessage =
+            welcomeMessages[Random().nextInt(welcomeMessages.length)];
+      });
+    });
   }
 
   @override
@@ -55,10 +109,10 @@ class _HomePageState extends State<HomePage> {
     List hot = articles.take(10).toList();
     hot.sort((a, b) => b['views'].compareTo(a['views']));
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F6),
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xffFFFFFF),
         toolbarHeight: 80,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,24 +120,32 @@ class _HomePageState extends State<HomePage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3.0),
+                Padding(
+                  padding: EdgeInsets.only(right: 5.0),
                   child: Text(
-                    'Hello',
+                    'Habari ${data['username']} 👋',
                     style: TextStyle(
-                      color: Color(0xff314165),
-                      fontSize: 14,
-                    ),
+                        color: Color(0xff000000),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  '${data['username']} 👋',
+                  currentMessage,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontFamily: 'Manane',
-                      color: const Color(0xff1684A7),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                )
+                    color: Color(0xff262626),
+                    fontSize: 10,
+                  ),
+                ),
+                // Text(
+                //   '${data['username']} 👋',
+                //   style: TextStyle(
+                //       fontFamily: 'Manane',
+                //       color: const Color(0xff1684A7),
+                //       fontSize: 18,
+                //       fontWeight: FontWeight.bold),
+                // )
               ],
             ),
             data['image'] == null
@@ -133,7 +195,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         children: [
-          // Divider(),
+          Divider(),
           CarsolePge(),
           const SizedBox(
             height: 10,
