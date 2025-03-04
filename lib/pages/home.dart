@@ -12,6 +12,8 @@ import 'package:afya/setting/edit_profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -415,6 +417,151 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: Text(
+                  'Popular',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      fontSize: 16,
+                      color: Color(0xff262626),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewsPage()));
+                },
+                child: const Padding(
+                  padding: const EdgeInsets.only(right: 20.0, top: 20),
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff262626),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          hot.isEmpty
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
+              : SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    itemCount: hot.length,
+                    itemBuilder: (context, index) => Container(
+                      margin: EdgeInsets.all(15),
+                      width: 320,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: Color(0xff0071e7),
+                      ),
+                      child: Column(
+                        children: [
+                          CachedNetworkImage(
+                              imageUrl: '${hot[index]['image']}',
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(7),
+                                          topRight: Radius.circular(7)),
+                                    ),
+                                    height: 170,
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                            left: 20,
+                                            top: 10,
+                                            height: 30,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors
+                                                      .white, //Color(0xff0071e7).withOpacity(0.7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 5),
+                                                    child: Icon(
+                                                      Icons.remove_red_eye,
+                                                      color: Color(0xff0071e7),
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
+                                                    child: Text(
+                                                      "${NumberFormat.compact().format(hot[index]['views'])} Views",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff262626),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                            )),
+                                        Positioned(
+                                            right: 10,
+                                            top: 10,
+                                            height: 30,
+                                            child: Container(
+                                                child: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xfffe0002),
+                                              child: Icon(
+                                                Icons.local_fire_department,
+                                                size: 22,
+                                                color: Colors.white,
+                                              ),
+                                            ))),
+                                      ],
+                                    ),
+                                  )),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Center(
+                            child: Text(
+                              //overflow: TextOverflow.ellipsis,
+
+                              hot[index]['title'].toUpperCase(),
+                              textAlign: TextAlign.center,
+
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                  )),
+
           // ************ HOT ARTICLES *************
           SizedBox(
             height: 20,
