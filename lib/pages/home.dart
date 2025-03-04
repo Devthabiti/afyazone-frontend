@@ -305,54 +305,46 @@ class _HomePageState extends State<HomePage> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        child: Row(
-                                          children: [
-                                            Text(
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: RatingBar.builder(
+                                              initialRating: 3,
+                                              direction: Axis.horizontal,
+                                              // allowHalfRating: true,
+                                              itemCount: 4,
+                                              itemSize: 15,
+                                              ignoreGestures: true,
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.diamond,
+                                                color: const Color(0xfffe0002),
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                rate = rating;
+                                                // print(rate);
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, bottom: 3),
+                                            child: Text(
                                               '( MD )',
                                               style: TextStyle(
                                                 fontFamily: 'Manane',
-                                                color: Color(0xff314165),
+                                                fontSize: 12,
+                                                color: const Color(0xff262626),
                                               ),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: RatingBar.builder(
-                                                initialRating: 2,
-                                                direction: Axis.horizontal,
-                                                // allowHalfRating: true,
-                                                itemCount: 4,
-                                                itemSize: 15,
-                                                ignoreGestures: true,
-                                                itemBuilder: (context, _) =>
-                                                    Icon(
-                                                  Icons.diamond,
-                                                  color: Colors.red,
-                                                ),
-                                                onRatingUpdate: (rating) {
-                                                  rate = rating;
-                                                  // print(rate);
-                                                },
-                                              ),
-                                            ),
-                                            Text(
-                                              '',
-                                              style: TextStyle(
-                                                fontFamily: 'Manane',
-                                                color: Color(0xff314165),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                       Container(
                                         width: 200,
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                        ),
+                                            horizontal: 10, vertical: 5),
                                         child: Text(
                                           '${doctors[index]['specialize']} - ${doctors[index]['region']}',
                                           overflow: TextOverflow.ellipsis,
@@ -367,9 +359,10 @@ class _HomePageState extends State<HomePage> {
                                       Container(
                                         width: 200,
                                         padding: const EdgeInsets.only(
-                                            left: 10, top: 5),
+                                          left: 10,
+                                        ),
                                         child: Text(
-                                          'TZS ${doctors[index]['price']}/= per person',
+                                          'TZS ${doctors[index]['price']}/= Per Person',
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily: 'Manane',
@@ -381,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
+                                            horizontal: 7, vertical: 5),
                                         child: Row(
                                           children: [
                                             Padding(
@@ -389,15 +382,15 @@ class _HomePageState extends State<HomePage> {
                                                   right: 3),
                                               child: Icon(
                                                 Icons.star,
-                                                size: 20,
-                                                color: Color(0xffF6EC72),
+                                                size: 18,
+                                                color: Color(0xff0071e7),
                                               ),
                                             ),
                                             Text(
                                               '${average.toStringAsFixed(1)}  | ',
                                               style: TextStyle(
                                                 fontFamily: 'Manane',
-                                                color: Color(0xff314165),
+                                                color: Color(0xff262626),
                                               ),
                                             ),
                                             Text(
