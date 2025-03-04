@@ -562,6 +562,137 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                   )),
 
+          SizedBox(
+            height: 20,
+            // child: Text('data'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: Text(
+                  'Just for you',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      fontSize: 16,
+                      color: Color(0xff262626),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewsPage()));
+                },
+                child: const Padding(
+                  padding: const EdgeInsets.only(right: 20.0, top: 20),
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff262626),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+            // child: Text('data'),
+          ),
+          ListView.builder(
+            itemCount: 3,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => Row(
+              children: [
+                CachedNetworkImage(
+                  imageUrl:
+                      'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
+                  imageBuilder: (context, imageProvider) => Container(
+                    margin: EdgeInsets.all(15),
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.amber,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover)),
+                  ),
+                  placeholder: (context, url) => Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/logo.jpg'))),
+                  ),
+                ),
+                Container(
+                  // color: Colors.amber,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
+                        style: TextStyle(
+                          fontFamily: 'Manane',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff262626), // Color(0xff0071e7),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.watch_later,
+                            size: 15,
+                            color: Color(0xff0071e7),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '1 hour ago ',
+                            style: TextStyle(
+                              fontFamily: 'Manane',
+                              fontSize: 10,
+
+                              color: Color(0xff262626), // Color(0xff0071e7),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Icon(
+                            Icons.remove_red_eye,
+                            size: 15,
+                            color: Color(0xff0071e7),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '150 views',
+                            style: TextStyle(
+                              fontFamily: 'Manane',
+                              fontSize: 10,
+
+                              color: Color(0xff262626), // Color(0xff0071e7),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+
           // ************ HOT ARTICLES *************
           SizedBox(
             height: 20,
@@ -573,7 +704,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  'Hot Articles 🔥',
+                  'Treding',
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
@@ -685,6 +816,149 @@ class _HomePageState extends State<HomePage> {
                     );
                   }),
 
+//***********************kjk */
+          // ************ just *************
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: Text(
+                  'Hot Article',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      fontSize: 16,
+                      color: Color(0xff262626),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewsPage()));
+                },
+                child: const Padding(
+                  padding: const EdgeInsets.only(right: 20.0, top: 20),
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff262626),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+            // child: Text('data'),
+          ),
+          Container(
+            // color: Colors.amber,
+            height: 120,
+            child: ListView.builder(
+              itemCount: hot.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  print(hot[index]['id']);
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                          'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
+                      imageBuilder: (context, imageProvider) => Container(
+                        margin: EdgeInsets.all(15),
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.amber,
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover)),
+                      ),
+                      placeholder: (context, url) => Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/logo.jpg'))),
+                      ),
+                    ),
+                    Container(
+                      // color: Colors.amber,
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
+                            style: TextStyle(
+                              fontFamily: 'Manane',
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff262626), // Color(0xff0071e7),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.messenger,
+                                size: 15,
+                                color: Color(0xff0071e7),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '1 comments',
+                                style: TextStyle(
+                                  fontFamily: 'Manane',
+                                  fontSize: 10,
+
+                                  color:
+                                      Color(0xff262626), // Color(0xff0071e7),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Icon(
+                                Icons.remove_red_eye,
+                                size: 15,
+                                color: Color(0xff0071e7),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '150 views',
+                                style: TextStyle(
+                                  fontFamily: 'Manane',
+                                  fontSize: 10,
+
+                                  color:
+                                      Color(0xff262626), // Color(0xff0071e7),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          Divider(),
           // ************ KUUZA BIDHAAAAAA *************
           const SizedBox(
             height: 10,
