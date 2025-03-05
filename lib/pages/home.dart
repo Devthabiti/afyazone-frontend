@@ -10,12 +10,14 @@ import 'package:afya/home/story.dart';
 import 'package:afya/pages/news.dart';
 import 'package:afya/setting/edit_profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../doctor/doctor_profile.dart';
 import '../models/providers/token_provider.dart';
@@ -62,6 +64,7 @@ class _HomePageState extends State<HomePage> {
   String currentMessage = "Afya ni mtaji 💪";
   Timer? _timer;
   double rate = 1.0;
+  int activeIndex = 0;
 
   @override
   void initState() {
@@ -708,7 +711,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -723,7 +726,7 @@ class _HomePageState extends State<HomePage> {
                     'View all',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                     ),
                   ),
                 ),
@@ -744,80 +747,120 @@ class _HomePageState extends State<HomePage> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // Number of columns
                       crossAxisSpacing: 8.0, // Space between columns
-                      mainAxisSpacing: 8.0, // Space between rows
-                      childAspectRatio: 0.8),
+                      mainAxisSpacing: 15.0, // Space between rows
+                      childAspectRatio: 0.7),
                   padding: EdgeInsets.all(8.0),
                   itemCount: hot.length, // Number of items
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        final data = context.read<ApiCalls>();
-                        data.fetchview(hot[index]['id'].toString());
-                        data.fetcharticles();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NewsDetails(
-                                      data: hot[index],
-                                    )));
-                      },
-                      child: CachedNetworkImage(
-                        imageUrl: '${hot[index]['image']}',
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                height: 80,
-                                width: double.infinity,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(
-                                            0.2), // Shadow color with opacity
-                                        spreadRadius:
-                                            4.0, // Spread radius of the shadow
-                                        blurRadius:
-                                            10.0, // Blur radius of the shadow
-                                        offset: Offset(0,
-                                            -5), // Offset of the shadow (x, y)
+                    return Card(
+                      child: GestureDetector(
+                        onTap: () {
+                          final data = context.read<ApiCalls>();
+                          data.fetchview(hot[index]['id'].toString());
+                          data.fetcharticles();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsDetails(
+                                        data: hot[index],
+                                      )));
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: '${hot[index]['image']}',
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(7),
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  bottom: 0,
+                                  height: 80,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.47,
+                                  child: Container(
+                                    padding: EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(
+                                              0.2), // Shadow color with opacity
+                                          spreadRadius:
+                                              4.0, // Spread radius of the shadow
+                                          blurRadius:
+                                              10.0, // Blur radius of the shadow
+                                          offset: Offset(0,
+                                              -5), // Offset of the shadow (x, y)
+                                        ),
+                                      ],
+                                      color: Colors
+                                          .white, //Color(0xff0071e7).withOpacity(1),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        hot[index]['title'].toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        //overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: Color(0xff262626),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ],
-                                    color: Color(0xff314165).withOpacity(0.6),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      hot[index]['title'].toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                      //overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                    right: 10,
+                                    top: 10,
+                                    height: 30,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors
+                                              .white, //Color(0xff0071e7).withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: Center(
+                                          child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: Icon(
+                                              Icons.thumb_up_alt_outlined,
+                                              color: Color(0xff0071e7),
+                                              size: 15,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
+                                            child: Text(
+                                              "${NumberFormat.compact().format(hot[index]['views'])}",
+                                              style: TextStyle(
+                                                color: Color(0xff262626),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                    )),
+                              ],
+                            ),
                           ),
-                        ),
-                        placeholder: (context, url) => Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/logo.jpg'))),
+                          placeholder: (context, url) => Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/logo.jpg'))),
+                          ),
                         ),
                       ),
                     );
                   }),
 
 //***********************kjk */
-          // ************ just *************
+          // ************ just ************
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -825,7 +868,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, top: 20),
                 child: Text(
-                  'Hot Article',
+                  'Hot ( zamoto )🔥',
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
@@ -852,112 +895,126 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           SizedBox(
-            height: 10,
-            // child: Text('data'),
+            height: 15,
           ),
-          Container(
-            // color: Colors.amber,
-            height: 120,
-            child: ListView.builder(
-              itemCount: hot.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  print(hot[index]['id']);
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl:
-                          'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
-                      imageBuilder: (context, imageProvider) => Container(
-                        margin: EdgeInsets.all(15),
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.amber,
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.cover)),
+          CarouselSlider.builder(
+              itemCount: 5,
+              itemBuilder: (context, index, realIndex) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
+                        imageBuilder: (context, imageProvider) => Container(
+                          margin: EdgeInsets.all(15),
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.amber,
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover)),
+                        ),
+                        placeholder: (context, url) => Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/logo.jpg'))),
+                        ),
                       ),
-                      placeholder: (context, url) => Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('assets/logo.jpg'))),
-                      ),
-                    ),
-                    Container(
-                      // color: Colors.amber,
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
-                            style: TextStyle(
-                              fontFamily: 'Manane',
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff262626), // Color(0xff0071e7),
+                      Container(
+                        // color: Colors.amber,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
+                              style: TextStyle(
+                                fontFamily: 'Manane',
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff262626), // Color(0xff0071e7),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.messenger,
-                                size: 15,
-                                color: Color(0xff0071e7),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                '1 comments',
-                                style: TextStyle(
-                                  fontFamily: 'Manane',
-                                  fontSize: 10,
-
-                                  color:
-                                      Color(0xff262626), // Color(0xff0071e7),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.messenger,
+                                  size: 15,
+                                  color: Color(0xff0071e7),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(
-                                Icons.remove_red_eye,
-                                size: 15,
-                                color: Color(0xff0071e7),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                '150 views',
-                                style: TextStyle(
-                                  fontFamily: 'Manane',
-                                  fontSize: 10,
-
-                                  color:
-                                      Color(0xff262626), // Color(0xff0071e7),
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                                Text(
+                                  '1 comments',
+                                  style: TextStyle(
+                                    fontFamily: 'Manane',
+                                    fontSize: 10,
+
+                                    color:
+                                        Color(0xff262626), // Color(0xff0071e7),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(
+                                  Icons.remove_red_eye,
+                                  size: 15,
+                                  color: Color(0xff0071e7),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  '150 views',
+                                  style: TextStyle(
+                                    fontFamily: 'Manane',
+                                    fontSize: 10,
+
+                                    color:
+                                        Color(0xff262626), // Color(0xff0071e7),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+              options: CarouselOptions(
+                height: 120,
+                viewportFraction: 1.0,
+                enableInfiniteScroll: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedSmoothIndicator(
+                activeIndex: activeIndex,
+                count: 5,
+                effect: WormEffect(
+                  dotWidth: 10,
+                  dotHeight: 10,
+                  activeDotColor: Color(0xff0071e7),
                 ),
               ),
-            ),
+            ],
           ),
-
+          SizedBox(
+            height: 5,
+          ),
           Divider(),
           // ************ KUUZA BIDHAAAAAA *************
           const SizedBox(
