@@ -1030,7 +1030,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -1039,103 +1039,41 @@ class _HomePageState extends State<HomePage> {
                   child: Icon(
                     Icons.arrow_forward,
                     size: 25,
-                    color: Color(0xff314165),
+                    color: Color(0xff262626),
                   )),
             ],
           ),
-          Container(
+          SizedBox(
             height: 160,
-            //width: double.infinity,
-            //color: Colors.amber,
-            child: ListView(
-              // physics: NeverScrollableScrollPhysics(),
+            child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(left: 5),
-                    //padding: EdgeInsets.all(10),
-                    //height: 30,
-                    width: 300,
+              itemCount: 5,
+              itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.only(left: 5, right: 15),
+                  width: 300,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7),
+                      image: DecorationImage(
+                          image: AssetImage('assets/da3.jpg'),
+                          fit: BoxFit.cover)),
+                  child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        image: DecorationImage(
-                            image: AssetImage('assets/da3.jpg'),
-                            fit: BoxFit.cover)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, left: 25),
-                          child: Text(
-                            'Comming Soon',
-                            style: TextStyle(
-                                fontFamily: 'Manane',
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  width: 15.0,
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 5),
-                    //padding: EdgeInsets.all(10),
-                    //height: 30,
-                    width: 300,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        image: DecorationImage(
-                            image: AssetImage('assets/da1.jpg'),
-                            fit: BoxFit.cover)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, left: 25),
-                          child: Text('Comming Soon',
-                              style: TextStyle(
-                                  fontFamily: 'Manane',
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  width: 15.0,
-                ),
-                Container(
-                    margin: EdgeInsets.only(left: 5),
-                    //padding: EdgeInsets.all(10),
-                    //height: 30,
-                    width: 300,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        image: DecorationImage(
-                            image: AssetImage('assets/da2.jpg'),
-                            fit: BoxFit.cover)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, left: 25),
-                          child: Text('Coming soon',
-                              style: TextStyle(
-                                  fontFamily: 'Manane',
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  width: 15.0,
-                ),
-              ],
+                      color: Color(0xff0071e7).withOpacity(0.25),
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: Text(
+                        'Available Soon 🔥',
+                        style: TextStyle(
+                            fontFamily: 'Manane',
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )),
             ),
           ),
           // ************ MAJONGWA *************
@@ -1153,7 +1091,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -1168,7 +1106,7 @@ class _HomePageState extends State<HomePage> {
                     'View all',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                     ),
                   ),
                 ),
@@ -1233,7 +1171,7 @@ class _HomePageState extends State<HomePage> {
                                             -5), // Offset of the shadow (x, y)
                                       ),
                                     ],
-                                    color: Colors.white.withOpacity(0.9),
+                                    color: Colors.white,
                                   ),
                                   child: Center(
                                     child: Text(
@@ -1242,8 +1180,8 @@ class _HomePageState extends State<HomePage> {
                                       //overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           // color: Colors.white,
-                                          color: Color(0xff314165),
-                                          fontSize: 16,
+                                          color: Color(0xff262626),
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -1274,7 +1212,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -1289,7 +1227,7 @@ class _HomePageState extends State<HomePage> {
                     'View all',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                     ),
                   ),
                 ),
@@ -1357,7 +1295,7 @@ class _HomePageState extends State<HomePage> {
                                           width: 100,
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
-                                              color: Color(0xff1684A7),
+                                              color: Color(0xff0071e7),
                                               borderRadius:
                                                   BorderRadius.circular(5)),
                                           child: Center(
@@ -1407,7 +1345,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -1422,7 +1360,7 @@ class _HomePageState extends State<HomePage> {
                     'View all',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xff314165),
+                      color: Color(0xff262626),
                     ),
                   ),
                 ),
@@ -1474,28 +1412,25 @@ class _HomePageState extends State<HomePage> {
                                 height: 80,
                                 width: double.infinity,
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(
-                                            0.2), // Shadow color with opacity
-                                        spreadRadius:
-                                            4.0, // Spread radius of the shadow
-                                        blurRadius:
-                                            10.0, // Blur radius of the shadow
-                                        offset: Offset(0,
-                                            -5), // Offset of the shadow (x, y)
-                                      ),
-                                    ],
-                                    color: Color(0xff314165).withOpacity(0.6),
-                                  ),
+                                  decoration: BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(
+                                          0.2), // Shadow color with opacity
+                                      spreadRadius:
+                                          4.0, // Spread radius of the shadow
+                                      blurRadius:
+                                          10.0, // Blur radius of the shadow
+                                      offset: Offset(
+                                          0, -5), // Offset of the shadow (x, y)
+                                    ),
+                                  ], color: Colors.white),
                                   child: Center(
                                     child: Text(
                                       food[index]['title'].toUpperCase(),
                                       textAlign: TextAlign.center,
                                       //overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color: Color(0xff262626),
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
