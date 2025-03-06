@@ -31,23 +31,27 @@ class _SearchState extends State<SearchPage> {
 
   AppBar buildSearchField() {
     return AppBar(
+      backgroundColor: const Color(0xffFFFFFF),
       automaticallyImplyLeading: false,
+      elevation: 1,
       centerTitle: true,
       title: TextFormField(
         autofocus: true,
+        cursorColor: Color(0xff262626).withOpacity(0.5),
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
           ),
-          hintText: "Search Articles",
-          hintStyle: TextStyle(color: Colors.white),
+          //filled: true,
+          hintText: "Search ",
+          hintStyle: TextStyle(color: Color(0xff262626).withOpacity(0.5)),
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.white,
+            color: Color(0xff262626).withOpacity(0.5),
           ),
           suffixIcon: IconButton(
             icon: Icon(Icons.clear),
-            color: Colors.white,
+            color: Color(0xff262626).withOpacity(0.5),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -155,20 +159,20 @@ class _SearchState extends State<SearchPage> {
                           imageBuilder: (context, imageProvider) =>
                               CircleAvatar(backgroundImage: imageProvider),
                           placeholder: (context, url) =>
-                              CircularProgressIndicator(),
+                              CircularProgressIndicator(
+                                  color: Color(0xff0071e7)),
                         ),
                         title: Text(
                           articles[index]['title'].toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff314165)),
+                              fontSize: 14,
+                              color: Color(0xff262626)),
                         ),
                         trailing: Text(
                           '${articles[index]['views']} Views',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff314165),
-                          ),
+                          style:
+                              TextStyle(fontSize: 12, color: Color(0xff262626)),
                         ),
                       ),
                       Divider(
