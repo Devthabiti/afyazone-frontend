@@ -43,8 +43,11 @@ class _NewsDetailsState extends State<NewsDetails> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+          backgroundColor: const Color(0xffFFFFFF),
           appBar: AppBar(
-            toolbarHeight: 100,
+            toolbarHeight: 80,
+            backgroundColor: const Color(0xffFFFFFF),
+            elevation: 1,
             automaticallyImplyLeading: false,
             title: ListTile(
               leading: CircleAvatar(
@@ -57,20 +60,30 @@ class _NewsDetailsState extends State<NewsDetails> {
                     padding: const EdgeInsets.only(right: 5),
                     child: Text(
                       'Afyazone',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(
+                        color: Color(0xff262626),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                  Icon(
-                    Iconsax.verify5,
-                    size: 15,
-                    color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Iconsax.verify5,
+                      size: 12,
+                      color: Color(0xff0071e7),
+                    ),
                   ),
                 ],
               ),
               //subtitle: Divider(),
               trailing: Text(
                 result,
-                style: TextStyle(fontSize: 11, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Color(0xff262626),
+                ),
               ),
             ),
           ),
@@ -102,10 +115,10 @@ class _NewsDetailsState extends State<NewsDetails> {
                           child: Text(
                             widget.data['title'].toUpperCase(),
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Tahoma',
-                              color: Color(0xff1684A7),
+                              //fontFamily: 'Tahoma',
+                              color: Color(0xff262626),
                             ),
                           ),
                         ),
@@ -118,9 +131,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                           child: Text(
                             widget.data['content'],
                             style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Tahoma',
-                              color: Color(0xff314165),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w200,
+                              color: Color(0xff262626),
                             ),
                           ),
                         ),
@@ -147,12 +160,16 @@ class _NewsDetailsState extends State<NewsDetails> {
                                         // color: Colors.amber,
                                         child: Icon(
                                           Iconsax.heart,
-                                          color: const Color(0xffF09A599),
+                                          color: Color(0xff262626),
                                         ),
                                       ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 0),
                                   child: Text(
+                                    style: TextStyle(
+                                      color: Color(0xff262626),
+                                      fontSize: 14,
+                                    ),
                                     widget.data['likes'].toString(),
                                   ),
                                 )
@@ -162,11 +179,15 @@ class _NewsDetailsState extends State<NewsDetails> {
                               children: [
                                 Icon(
                                   Iconsax.messages_24,
-                                  color: const Color(0xffF09A599),
+                                  color: Color(0xff262626),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 3),
                                   child: Text(
+                                    style: TextStyle(
+                                      color: Color(0xff262626),
+                                      fontSize: 14,
+                                    ),
                                     widget.data['comments'].length.toString(),
                                   ),
                                 )
@@ -176,11 +197,15 @@ class _NewsDetailsState extends State<NewsDetails> {
                               children: [
                                 Icon(
                                   Iconsax.eye,
-                                  color: const Color(0xffF09A599),
+                                  color: Color(0xff262626),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 3),
                                   child: Text(
+                                    style: TextStyle(
+                                      color: Color(0xff262626),
+                                      fontSize: 14,
+                                    ),
                                     widget.data['views'].toString(),
                                   ),
                                 )
@@ -200,7 +225,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                             child: Text(
                               'No any Comment yet',
                               style: TextStyle(
-                                color: Color(0xff314165),
+                                color: Color(0xff262626),
                               ),
                             ),
                           ),
@@ -237,7 +262,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                                         radius: 20,
                                       ),
                                       placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
+                                          CircularProgressIndicator(
+                                        color: Color(0xff0071e7),
+                                      ),
                                     ),
                               title: Row(
                                 children: [
@@ -247,17 +274,17 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       widget.data['comments'][index]
                                           ['client_profile']['username'],
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
-                                        color: const Color(0xff09A599),
+                                        color: Color(0xff262626),
                                       ),
                                     ),
                                   ),
                                   Text(
                                     result,
                                     style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff314165),
+                                      fontSize: 13,
+                                      color: Color(0xff262626).withOpacity(0.5),
                                     ),
                                   ),
                                 ],
@@ -265,8 +292,9 @@ class _NewsDetailsState extends State<NewsDetails> {
                               subtitle: Text(
                                 widget.data['comments'][index]['content'],
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   fontFamily: 'Manane',
+                                  color: Color(0xff262626),
                                 ),
                               ),
                             );
@@ -280,42 +308,70 @@ class _NewsDetailsState extends State<NewsDetails> {
     );
   }
 
+  final FocusNode focus = FocusNode();
   Widget _buildTextComposer() {
-    return Container(
-      color: const Color(0xff1684A7),
-      height: 80,
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        children: <Widget>[
-          // Text input field
-          Expanded(
-            child: TextField(
-              controller: _textController,
-              onChanged: (String messageText) {
-                setState(() {
-                  _isComposing = messageText.trim().isNotEmpty;
-                });
-              },
-              style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.multiline,
-              //expands: true,
-              minLines: 1,
-              maxLines: 3,
-              onSubmitted: _handleSubmitted,
-              decoration: InputDecoration.collapsed(
-                  hintText: 'Leave a comment',
-                  hintStyle: TextStyle(color: Colors.white)),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(focus);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Shadow color with opacity
+              spreadRadius: 1.0, // Spread radius of the shadow
+              blurRadius: 4.0, // Blur radius of the shadow
+              offset: Offset(0, -1), // Offset of the shadow (x, y)
             ),
-          ),
-          // Send button
-          IconButton(
-            icon: Icon(Icons.send,
-                color: _isComposing ? const Color(0xffF6EC72) : Colors.white),
-            onPressed: _isComposing
-                ? () => _handleSubmitted(_textController.text)
-                : null,
-          ),
-        ],
+          ],
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        ),
+        height: 100,
+        padding: EdgeInsets.symmetric(horizontal: 25.0),
+        child: Row(
+          children: <Widget>[
+            // Text input field
+            Expanded(
+              child: TextField(
+                focusNode: focus,
+                controller: _textController,
+                onChanged: (String messageText) {
+                  setState(() {
+                    _isComposing = messageText.trim().isNotEmpty;
+                  });
+                },
+                style: TextStyle(color: Color(0xff262626)),
+                keyboardType: TextInputType.multiline,
+                //expands: true,
+
+                minLines: 1,
+                maxLines: 3,
+                onSubmitted: _handleSubmitted,
+                decoration: InputDecoration.collapsed(
+                    hintText: 'Leave a comment ',
+                    hintStyle:
+                        TextStyle(color: Color(0xff262626), fontSize: 16)),
+              ),
+            ),
+            // Send button
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0, bottom: 5),
+              child: CircleAvatar(
+                backgroundColor:
+                    _isComposing ? const Color(0xfffe0002) : Color(0xff0071e7),
+                radius: 20,
+                child: IconButton(
+                  icon: Icon(Icons.send, color: Colors.white),
+                  onPressed: _isComposing
+                      ? () => _handleSubmitted(_textController.text)
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
