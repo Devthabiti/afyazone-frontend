@@ -36,22 +36,21 @@ class _NewsPageState extends State<NewsPage> {
           height: 40,
 
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey.withOpacity(0.2) //Color(0xff262626),
+              ),
           child: Padding(
-            padding: EdgeInsets.only(left: 30, right: 10),
+            padding: EdgeInsets.only(left: 20, right: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.search,
-                  color: Color(0xff09A599),
-                ),
+                Icon(Icons.search, color: Color(0xff262626).withOpacity(0.5)),
                 Padding(
-                  padding: EdgeInsets.only(left: 25),
+                  padding: EdgeInsets.only(left: 5),
                   child: Text(
-                    'Search Articles',
-                    style: TextStyle(fontSize: 16, color: Color(0xff314165)),
+                    'Search',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff262626).withOpacity(0.5)),
                   ),
                 ),
               ],
@@ -124,11 +123,13 @@ class _NewsPageState extends State<NewsPage> {
     var articles = context.watch<ApiCalls>().articles;
 
     return Scaffold(
+        backgroundColor: const Color(0xffFFFFFF),
         appBar: AppBar(
             toolbarHeight: 80,
             elevation: 1,
             automaticallyImplyLeading: false,
             centerTitle: true,
+            backgroundColor: const Color(0xffFFFFFF),
             title: search()),
         body: articles.isEmpty
             ? Center(
@@ -176,23 +177,27 @@ class _NewsPageState extends State<NewsPage> {
                               child: Text(
                                 'Afyazone',
                                 style: TextStyle(
-                                  color: Color(0xff314165),
+                                  color: Color(0xff262626),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                            Icon(
-                              Iconsax.verify5,
-                              size: 20,
-                              color: const Color(0xff1684A7),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2),
+                              child: Icon(
+                                Iconsax.verify5,
+                                size: 12,
+                                color: Color(0xff0071e7),
+                              ),
                             ),
                           ],
                         ),
                         //subtitle: Divider(),
                         trailing: Text(
                           result,
-                          style: TextStyle(
-                            color: Color(0xff314165),
-                          ),
+                          style:
+                              TextStyle(color: Color(0xff262626), fontSize: 12),
                         ),
                       ),
                       GestureDetector(
@@ -213,11 +218,11 @@ class _NewsPageState extends State<NewsPage> {
                           child: Text(
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            articles[index]['content'].toString(),
+                            '${articles[index]['title']} ${articles[index]['content']}',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontFamily: 'Tahoma',
-                              color: Color(0xff314165),
+                              color: Color(0xff262626),
                             ),
                           ),
                         ),
@@ -276,13 +281,17 @@ class _NewsPageState extends State<NewsPage> {
                                         },
                                         icon: Icon(
                                           Iconsax.heart,
-                                          color: const Color(0xffF09A599),
+                                          color: Color(0xff262626),
                                         ),
                                       ),
                                     ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 0),
                                 child: Text(
+                                  style: TextStyle(
+                                    color: Color(0xff262626),
+                                    fontSize: 14,
+                                  ),
                                   articles[index]['likes'].toString(),
                                 ),
                               )
@@ -304,11 +313,15 @@ class _NewsPageState extends State<NewsPage> {
                               children: [
                                 Icon(
                                   Iconsax.messages_24,
-                                  color: const Color(0xffF09A599),
+                                  color: Color(0xff262626),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 3),
                                   child: Text(
+                                    style: TextStyle(
+                                      color: Color(0xff262626),
+                                      fontSize: 14,
+                                    ),
                                     articles[index]['comments']
                                         .length
                                         .toString(),
@@ -321,11 +334,15 @@ class _NewsPageState extends State<NewsPage> {
                             children: [
                               Icon(
                                 Iconsax.eye,
-                                color: const Color(0xffF09A599),
+                                color: Color(0xff262626),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 3),
                                 child: Text(
+                                  style: TextStyle(
+                                    color: Color(0xff262626),
+                                    fontSize: 14,
+                                  ),
                                   articles[index]['views'].toString(),
                                 ),
                               )
