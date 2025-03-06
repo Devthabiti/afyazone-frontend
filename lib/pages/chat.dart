@@ -57,9 +57,19 @@ class _ChatPageState extends State<ChatPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: const Color(0xffFFFFFF),
         appBar: AppBar(
-          title: Text('Messages'),
+          backgroundColor: const Color(0xffFFFFFF),
+          title: Text(
+            'Messages',
+            style: TextStyle(
+              color: Color(0xff262626),
+              //fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           centerTitle: false,
+          elevation: 0,
         ),
         body: inbox.isEmpty
             ? Center(
@@ -69,8 +79,9 @@ class _ChatPageState extends State<ChatPage> {
                     Text(
                       'No any Message yet,',
                       style: TextStyle(
-                        color: Color(0xff314165),
-                      ),
+                          color: Color(0xff262626),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 15,
@@ -78,12 +89,42 @@ class _ChatPageState extends State<ChatPage> {
                     Text(
                       textAlign: TextAlign.center,
                       'Please book an appointment with doctors to start chatting.',
-                      style: TextStyle(color: Color(0xff314165)),
+                      style: TextStyle(color: Color(0xff262626), fontSize: 12),
                     ),
-                    Lottie.asset(
-                      'assets/loader.json',
-                      width: 100,
-                      height: 100,
+                    // Lottie.asset(
+                    //   'assets/loader.json',
+                    //   width: 100,
+                    //   height: 100,
+                    // ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    GestureDetector(
+                      // onTap: _submit,
+                      child: Container(
+                        height: 40,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xff0071e7), Color(0xff262626)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp, // This is the default
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Start Now',
+                            style: TextStyle(
+                                fontFamily: 'Manane',
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -112,6 +153,7 @@ class _ChatPageState extends State<ChatPage> {
                   //   ),
 
                   // ),
+                  Divider(),
                   Expanded(
                       child: ListView.builder(
                           itemCount: inbox.length,
@@ -157,19 +199,24 @@ class _ChatPageState extends State<ChatPage> {
                                   title: Text(
                                     'Dr ${inbox[index]['reciever_profile']['first_name']}',
                                     style: TextStyle(
-                                      color: Color(0xff1684A7),
-                                      //fontWeight: FontWeight.bold,
-                                    ),
+                                        color: Color(0xff262626),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
                                   isThreeLine: true,
                                   //dense: true,
                                   subtitle: Text(inbox[index]['message'],
                                       maxLines: 2,
+                                      style: TextStyle(
+                                          color: Color(0xff262626),
+                                          fontSize: 12),
                                       overflow: TextOverflow.ellipsis),
                                   trailing: Text(
                                     result,
                                     style: TextStyle(
-                                        color: Color(0xff314165), fontSize: 12),
+                                        color:
+                                            Color(0xff262626).withOpacity(0.5),
+                                        fontSize: 12),
                                   ),
                                 ),
                                 Divider(
