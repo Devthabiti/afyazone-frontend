@@ -185,35 +185,29 @@ class _LoginPageState extends State<LoginPage> {
     final form = formKey.currentState;
 
     if (form!.validate()) {
-      // showDialog(
-      //     context: context,
-      //     barrierDismissible: false,
-      //     builder: (context) {
-      //       return AlertDialog(
-      //         title: Center(
-      //           child: Lottie.asset(
-      //             'assets/load.json',
-      //             width: 150,
-      //             height: 150,
-      //           ),
-      //         ),
-      //         elevation: 0,
-      //         backgroundColor: Colors.transparent,
-      //         // shape: RoundedRectangleBorder(
-      //         //     borderRadius: BorderRadius.circular(20)),
-      //       );
-      //     });
-      // if (phone.text == '659242027') {
-      //   postLogin();
-      // } else {
-      //   postData();
-      // }
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OtpPage(
-                    data: {},
-                  )));
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Center(
+                child: Lottie.asset(
+                  'assets/load.json',
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              // shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(20)),
+            );
+          });
+      if (phone.text == '659242027') {
+        postLogin();
+      } else {
+        postData();
+      }
     }
   }
 
@@ -412,7 +406,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Something went Wrong',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -432,7 +426,7 @@ class _LoginPageState extends State<LoginPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                             fontSize: 12,
                           ),
                           "Oops! It seems like the phone number is not correct. or Something not correct"),
@@ -450,8 +444,8 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,

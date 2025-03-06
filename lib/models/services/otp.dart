@@ -60,14 +60,16 @@ class _OtpPageState extends State<OtpPage> {
                     'The OTP you entered is incorrect',
                     style: TextStyle(
                         fontFamily: 'Manane',
-                        fontSize: 16,
+                        fontSize: 14,
+                        color: Color(0xfffe0002), //fe0002,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
             duration: const Duration(seconds: 5),
-            backgroundColor: const Color(0xff1684A7),
+            backgroundColor: Colors.white,
+            elevation: 10,
           ),
         );
       }
@@ -194,7 +196,7 @@ class _OtpPageState extends State<OtpPage> {
                 style: TextStyle(
                     fontFamily: 'Manane',
                     fontSize: 20,
-                    color: Color(0xff314165),
+                    color: Color(0xff262626),
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -204,7 +206,7 @@ class _OtpPageState extends State<OtpPage> {
                 'Code has been sent to : +${widget.data['phone_number']}',
                 style: const TextStyle(
                   fontFamily: 'Manane',
-                  color: Color(0xff314165),
+                  color: Color(0xff262626),
                   fontSize: 14,
                 ),
               ),
@@ -230,6 +232,7 @@ class _OtpPageState extends State<OtpPage> {
                 style: TextStyle(
                     fontFamily: 'Manane',
                     fontSize: 14,
+                    color: Color(0xff262626),
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -244,7 +247,10 @@ class _OtpPageState extends State<OtpPage> {
                 child: const Text(
                   'Resend code',
                   style: TextStyle(
-                      fontFamily: 'Manane', fontSize: 14, color: Colors.purple),
+                    fontFamily: 'Manane',
+                    fontSize: 14,
+                    color: Color(0xfffe0002),
+                  ),
                 ),
               ),
               Visibility(
@@ -277,7 +283,7 @@ class _OtpPageState extends State<OtpPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xff1684A7), Color(0xff09A599)],
+                      colors: [Color(0xff0071e7), Color(0xff262626)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [0.0, 1.0],
@@ -320,7 +326,7 @@ class _OtpPageState extends State<OtpPage> {
                       child: Text(
                         'Something went Wrong',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -340,7 +346,7 @@ class _OtpPageState extends State<OtpPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                             fontSize: 12,
                           ),
                           "Oops! It looks like Something not correct. \nPlease try again later "),
@@ -358,8 +364,8 @@ class _OtpPageState extends State<OtpPage> {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
