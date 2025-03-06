@@ -32,9 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             //autofocus: true,
             validator: (val) =>
                 val!.length < 9 ? 'Complete Phone Number' : null,
-            style: TextStyle(
-              fontSize: 15,
-            ),
+            style: TextStyle(fontSize: 15, color: Color(0xff262626)),
             keyboardType: TextInputType.phone,
             maxLength: 9,
             decoration: InputDecoration(
@@ -187,29 +185,35 @@ class _LoginPageState extends State<LoginPage> {
     final form = formKey.currentState;
 
     if (form!.validate()) {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return AlertDialog(
-              title: Center(
-                child: Lottie.asset(
-                  'assets/load.json',
-                  width: 150,
-                  height: 150,
-                ),
-              ),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              // shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20)),
-            );
-          });
-      if (phone.text == '659242027') {
-        postLogin();
-      } else {
-        postData();
-      }
+      // showDialog(
+      //     context: context,
+      //     barrierDismissible: false,
+      //     builder: (context) {
+      //       return AlertDialog(
+      //         title: Center(
+      //           child: Lottie.asset(
+      //             'assets/load.json',
+      //             width: 150,
+      //             height: 150,
+      //           ),
+      //         ),
+      //         elevation: 0,
+      //         backgroundColor: Colors.transparent,
+      //         // shape: RoundedRectangleBorder(
+      //         //     borderRadius: BorderRadius.circular(20)),
+      //       );
+      //     });
+      // if (phone.text == '659242027') {
+      //   postLogin();
+      // } else {
+      //   postData();
+      // }
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OtpPage(
+                    data: {},
+                  )));
     }
   }
 
@@ -229,61 +233,57 @@ class _LoginPageState extends State<LoginPage> {
                   child: Form(
                     key: formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.10,
                         ),
                         Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 10),
                               child: CircleAvatar(
-                                radius: 35,
-                                backgroundColor: Color(0xff1684A7),
+                                radius: 50,
+                                backgroundColor: Color(0xff0071e7),
                                 backgroundImage:
                                     AssetImage('assets/afyazonel.png'),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                'Afya zone',
-                                style: TextStyle(
-                                    fontFamily: 'Manane',
-                                    fontSize: 25,
-                                    color: Color(0xff1684A7),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: 10),
+                            //   child: Text(
+                            //     'Afya zone',
+                            //     style: TextStyle(
+                            //         fontFamily: 'Manane',
+                            //         fontSize: 25,
+                            //         color: Color(0xff0071e7),
+                            //         fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.025,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 30),
-                          child: Text(
-                            'Hi! welcome to AfyaZone',
-                            style: TextStyle(
-                                fontFamily: 'Manane',
-                                fontSize: 20,
-                                color: Color(0xff314165),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                          child: Text(
-                            'Get started by providing your phone number.',
-                            style: TextStyle(
+                        Text(
+                          'Hi! welcome to AfyaZone',
+                          style: TextStyle(
                               fontFamily: 'Manane',
-                              color: Color(0xff314165),
-                              fontSize: 14,
-                            ),
+                              fontSize: 20,
+                              color: Color(0xff262626),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Text(
+                          'Get started by providing your phone number.',
+                          style: TextStyle(
+                            fontFamily: 'Manane',
+                            color: Color(0xff262626),
+                            fontSize: 14,
                           ),
                         ),
                         SizedBox(
@@ -305,8 +305,8 @@ class _LoginPageState extends State<LoginPage> {
                                   borderRadius: BorderRadius.circular(20),
                                   gradient: const LinearGradient(
                                     colors: [
-                                      Color(0xff1684A7),
-                                      Color(0xff09A599)
+                                      Color(0xff0071e7),
+                                      Color(0xff262626)
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -352,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
                               'By continuing, you agree to our',
                               style: TextStyle(
                                 fontFamily: 'Manane',
-                                color: Color(0xff314165),
+                                color: Color(0xff262626),
                                 fontSize: 14,
                               ),
                             ),
@@ -378,7 +378,7 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     fontFamily: 'Manane',
                                     fontSize: 14,
-                                    color: Color(0xff7743DB),
+                                    color: Color(0xfffe0002),
                                     decoration: TextDecoration.underline,
                                     fontWeight: FontWeight.bold),
                               ),
