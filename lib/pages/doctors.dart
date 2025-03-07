@@ -1,6 +1,7 @@
 import 'package:afya/doctor/doctor_profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -22,25 +23,23 @@ class _DoctorsPageState extends State<DoctorsPage> {
       height: 40,
 
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: const Color(0xffffffff)),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey.withOpacity(0.2)),
       child: Padding(
         padding: EdgeInsets.only(
           left: 30,
         ),
         child: TextFormField(
-          style: TextStyle(color: Color(0xff314165)),
+          style: TextStyle(color: Color(0xff262626).withOpacity(0.5)),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 10),
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
             ),
             hintText: "Search for doctors",
-            hintStyle: TextStyle(color: Color(0xff314165)),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Color(0xff09A599),
-            ),
+            hintStyle: TextStyle(color: Color(0xff262626).withOpacity(0.5)),
+            prefixIcon:
+                Icon(Icons.search, color: Color(0xff262626).withOpacity(0.5)),
           ),
           onChanged: searchArticles,
         ),
@@ -64,6 +63,8 @@ class _DoctorsPageState extends State<DoctorsPage> {
       // ),
     );
   }
+
+  double rate = 1.0;
 
   List doctors = [];
   void searchArticles(String query) {
@@ -101,9 +102,10 @@ class _DoctorsPageState extends State<DoctorsPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          backgroundColor: const Color(0xffF6F6F6),
+          backgroundColor: const Color(0xffFFFFFF),
           appBar: AppBar(
-              toolbarHeight: 100,
+              toolbarHeight: 80,
+              backgroundColor: const Color(0xffFFFFFF),
               elevation: 1,
               automaticallyImplyLeading: false,
               centerTitle: true,
@@ -129,6 +131,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                     )));
                       },
                       child: Card(
+                        color: const Color(0xffFFFFFF),
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: [
@@ -160,7 +163,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                 'Dr ${doctors[index]['first_name']}  ${doctors[index]['last_name']}',
                                 style: TextStyle(
                                     fontFamily: 'Manane',
-                                    color: const Color(0xff1684A7),
+                                    color: const Color(0xff262626),
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -168,9 +171,35 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                 ' ${doctors[index]['specialize']}',
                                 style: TextStyle(
                                   fontFamily: 'Manane',
-                                  color: Color(0xff314165),
+                                  color:
+                                      const Color(0xff262626).withOpacity(0.6),
                                 ),
                               ),
+                              trailing: Container(
+                                  width: 100,
+                                  //color: Colors.amber,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.online_prediction,
+                                        size: 20,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        'Online',
+                                        style: TextStyle(
+                                          fontFamily: 'Manane',
+                                          color: const Color(0xff262626),
+                                          fontSize: 14,
+                                          // fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
                             ),
                             Container(
                               width: double.infinity,
@@ -179,28 +208,104 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                   horizontal: 25, vertical: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: const Color(0xff09A599)
-                                      .withOpacity(0.25)),
+                                  color:
+                                      const Color(0xff0071e7).withOpacity(0.6)),
                               child: Center(
                                   child: Text(
-                                      'Works at ${doctors[index]['hospital']}')),
+                                'Works at ${doctors[index]['hospital']}',
+                                style: TextStyle(
+                                  fontFamily: 'Manane',
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  // fontWeight: FontWeight.bold,
+                                ),
+                              )),
                             ),
                             ListTile(
                               title: Text(
                                 'Availability',
                                 style: TextStyle(
                                     fontFamily: 'Manane',
-                                    color: const Color(0xff1684A7),
+                                    color: const Color(0xff262626),
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(
-                                  '${doctors[index]['start_day']}- ${doctors[index]['end_day']}'),
+                                '${doctors[index]['start_day']} - ${doctors[index]['end_day']}',
+                                style: TextStyle(
+                                  fontFamily: 'Manane',
+                                  color:
+                                      const Color(0xff262626).withOpacity(0.6),
+                                ),
+                              ),
                               trailing: Text(
                                 'TZS ${doctors[index]['price']}/= per person',
                                 style: TextStyle(
                                   fontFamily: 'Manane',
-                                  color: Color(0xff314165),
+                                  color:
+                                      const Color(0xff262626).withOpacity(0.6),
+                                  fontSize: 14,
+                                  // fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'Level of Profession',
+                                style: TextStyle(
+                                    fontFamily: 'Manane',
+                                    color: const Color(0xff262626),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Container(
+                                // color: Colors.amber,
+                                width: 120,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: RatingBar.builder(
+                                        initialRating: 3,
+                                        direction: Axis.horizontal,
+                                        // allowHalfRating: true,
+                                        itemCount: 4,
+                                        itemSize: 15,
+                                        ignoreGestures: true,
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.diamond,
+                                          color: const Color(0xfffe0002),
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          rate = rating;
+                                          // print(rate);
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5.0, bottom: 3),
+                                      child: Text(
+                                        '( MD )',
+                                        style: TextStyle(
+                                          fontFamily: 'Manane',
+                                          fontSize: 12,
+                                          color: const Color(0xff262626)
+                                              .withOpacity(0.6),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              trailing: Text(
+                                'Total Patient : 12',
+                                style: TextStyle(
+                                  fontFamily: 'Manane',
+                                  color:
+                                      const Color(0xff262626).withOpacity(0.6),
+                                  fontSize: 14,
+                                  // fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
