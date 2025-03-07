@@ -42,6 +42,7 @@ class _InboxPageState extends State<InboxPage> {
             validator: (val) => val!.isEmpty ? 'Say something' : null,
             style: TextStyle(
               fontSize: 15,
+              color: Color(0xff262626),
             ),
             keyboardType: TextInputType.multiline,
             maxLines: 4,
@@ -57,7 +58,7 @@ class _InboxPageState extends State<InboxPage> {
               hintText: "leave your review here ..",
               hintStyle: TextStyle(
                 fontSize: 15,
-                color: Color(0xff092058).withOpacity(0.25),
+                color: Color(0xff262626).withOpacity(0.25),
               ),
             )));
   }
@@ -167,16 +168,35 @@ class _InboxPageState extends State<InboxPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: const Color(0xffFFFFFF),
         appBar: AppBar(
-          title: Text(widget.doctorName),
+          backgroundColor: const Color(0xffFFFFFF),
+          title: Text(
+            widget.doctorName,
+            style: TextStyle(
+              color: Color(0xff262626),
+              //fontSize: 14,
+              // fontWeight: FontWeight.w500,
+            ),
+          ),
           centerTitle: true,
+          elevation: 1,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Color(0xff262626),
+              )),
           actions: [
             IconButton(
               onPressed: mydialog,
               icon: Icon(
                 Iconsax.star1,
                 size: 25,
-                color: Color(0xffF6EC72),
+                color: Color(0xff0071e7),
               ),
             ),
             SizedBox(
@@ -272,42 +292,69 @@ class _InboxPageState extends State<InboxPage> {
     );
   }
 
+  final FocusNode focus = FocusNode();
   Widget _buildTextComposer(userId) {
-    return Container(
-      color: const Color(0xff1684A7),
-      height: 80,
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        children: <Widget>[
-          // Text input field
-          Expanded(
-            child: TextFormField(
-              controller: _textController,
-              onChanged: (String messageText) {
-                setState(() {
-                  _isComposing = messageText.trim().isNotEmpty;
-                });
-              },
-              keyboardType: TextInputType.multiline,
-              style: TextStyle(color: Colors.white),
-              //expands: true,
-              minLines: 1,
-              maxLines: 3,
-              //onSubmitted: _handleSubmitted,
-              decoration: InputDecoration.collapsed(
-                  hintText: 'Send a message',
-                  hintStyle: TextStyle(color: Colors.white)),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(focus);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Shadow color with opacity
+              spreadRadius: 1.0, // Spread radius of the shadow
+              blurRadius: 4.0, // Blur radius of the shadow
+              offset: Offset(0, -1), // Offset of the shadow (x, y)
             ),
-          ),
-          // Send button
-          IconButton(
-            icon: Icon(Icons.send,
-                color: _isComposing ? const Color(0xffF6EC72) : Colors.white),
-            onPressed: _isComposing
-                ? () => _handleSubmitted(_textController.text)
-                : null,
-          ),
-        ],
+          ],
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        ),
+        height: 100,
+        padding: EdgeInsets.symmetric(horizontal: 25.0),
+        child: Row(
+          children: <Widget>[
+            // Text input field
+            Expanded(
+              child: TextFormField(
+                focusNode: focus,
+                controller: _textController,
+                onChanged: (String messageText) {
+                  setState(() {
+                    _isComposing = messageText.trim().isNotEmpty;
+                  });
+                },
+                keyboardType: TextInputType.multiline,
+                style: TextStyle(color: Color(0xff262626)),
+                //expands: true,
+                minLines: 1,
+                maxLines: 3,
+                //onSubmitted: _handleSubmitted,
+                decoration: InputDecoration.collapsed(
+                    hintText: 'Send a message',
+                    hintStyle:
+                        TextStyle(color: Color(0xff262626), fontSize: 16)),
+              ),
+            ),
+            // Send button
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0, bottom: 5),
+              child: CircleAvatar(
+                backgroundColor:
+                    _isComposing ? const Color(0xfffe0002) : Color(0xff0071e7),
+                radius: 20,
+                child: IconButton(
+                  icon: Icon(Icons.send, color: Colors.white),
+                  onPressed: _isComposing
+                      ? () => _handleSubmitted(_textController.text)
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -415,7 +462,7 @@ class _InboxPageState extends State<InboxPage> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
-                                    color: Color(0xff02050a),
+                                    color: Color(0xff262626),
                                   ),
                                 ),
                               ),
@@ -430,7 +477,7 @@ class _InboxPageState extends State<InboxPage> {
                                   //ignoreGestures: true,
                                   itemBuilder: (context, _) => Icon(
                                     Icons.star,
-                                    color: Colors.amber,
+                                    color: Color(0xff0071e7),
                                   ),
                                   onRatingUpdate: (rating) {
                                     rate = rating;
@@ -454,9 +501,8 @@ class _InboxPageState extends State<InboxPage> {
                                       child: Text(
                                         'Comments',
                                         style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff02050a),
-                                        ),
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff262626)),
                                       ),
                                     ),
                                     const SizedBox(
@@ -477,8 +523,8 @@ class _InboxPageState extends State<InboxPage> {
                                                 BorderRadius.circular(7),
                                             gradient: const LinearGradient(
                                               colors: [
-                                                Color(0xff1684A7),
-                                                Color(0xff09A599)
+                                                Color(0xff0071e7),
+                                                Color(0xff262626)
                                               ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
@@ -572,8 +618,8 @@ class _InboxPageState extends State<InboxPage> {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
