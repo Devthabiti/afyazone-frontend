@@ -65,9 +65,7 @@ class _CompleteProfileState extends State<CompleteProfile>
             validator: (val) => val!.length < 3
                 ? 'Username should be atlest 3 character long'
                 : null,
-            style: TextStyle(
-              fontSize: 15,
-            ),
+            style: TextStyle(fontSize: 15, color: Color(0xff262626)),
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
@@ -81,7 +79,7 @@ class _CompleteProfileState extends State<CompleteProfile>
               hintText: "Username",
               hintStyle: TextStyle(
                 fontSize: 15,
-                color: Color(0xff092058).withOpacity(0.25),
+                color: Color(0xff262626).withOpacity(0.25),
               ),
             )));
   }
@@ -108,11 +106,11 @@ class _CompleteProfileState extends State<CompleteProfile>
         value: value,
         icon: Icon(
           Icons.arrow_drop_down,
-          color: Color(0xff092058).withOpacity(0.25),
+          color: Color(0xff262626).withOpacity(0.25),
         ),
         style: TextStyle(
           fontSize: 15,
-          color: Color(0xff092058),
+          color: Color(0xff262626),
         ),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
@@ -139,7 +137,7 @@ class _CompleteProfileState extends State<CompleteProfile>
           'Select Gender',
           style: TextStyle(
             fontSize: 15,
-            color: Color(0xff092058).withOpacity(0.25),
+            color: Color(0xff262626).withOpacity(0.25),
           ),
         ),
       ),
@@ -359,11 +357,15 @@ class _CompleteProfileState extends State<CompleteProfile>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFFFFFF),
+        elevation: 1,
         title: const Text(
           'Complete Profile',
           style: TextStyle(
-            color: Color(0xffF6F6F6),
+            color: Color(0xff262626),
+            fontSize: 18,
           ),
         ),
         centerTitle: true,
@@ -387,7 +389,7 @@ class _CompleteProfileState extends State<CompleteProfile>
                           gradient: LinearGradient(
                             colors: [
                               Color(0xff1684A7).withOpacity(0.65),
-                              Color(0xff09A599).withOpacity(0.65)
+                              Color(0xff0071e7).withOpacity(0.65)
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -442,7 +444,7 @@ class _CompleteProfileState extends State<CompleteProfile>
                               bottom: 15,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: Color(0xff1684A7),
+                                backgroundColor: Color(0xff0071e7),
                                 child: FaIcon(
                                   FontAwesomeIcons.pencil,
                                   size: 18,
@@ -526,7 +528,7 @@ class _CompleteProfileState extends State<CompleteProfile>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xff1684A7), Color(0xff09A599)],
+                      colors: [Color(0xff0071e7), Color(0xff262626)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [0.0, 1.0],
@@ -572,7 +574,7 @@ class _CompleteProfileState extends State<CompleteProfile>
                       child: Text(
                         'Something went Wrong',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -592,7 +594,7 @@ class _CompleteProfileState extends State<CompleteProfile>
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                             fontSize: 12,
                           ),
                           "Oops! It looks like Something not correct. \nor username is already used"),
@@ -610,8 +612,8 @@ class _CompleteProfileState extends State<CompleteProfile>
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
