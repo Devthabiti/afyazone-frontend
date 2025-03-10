@@ -5,6 +5,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -168,127 +169,243 @@ class _InboxPageState extends State<InboxPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: const Color(0xffFFFFFF),
-        appBar: AppBar(
           backgroundColor: const Color(0xffFFFFFF),
-          title: Text(
-            widget.doctorName,
-            style: TextStyle(
-              color: Color(0xff262626),
-              //fontSize: 14,
-              // fontWeight: FontWeight.w500,
-            ),
-          ),
-          centerTitle: true,
-          elevation: 1,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 20,
-                color: Color(0xff262626),
-              )),
-          actions: [
-            IconButton(
-              onPressed: mydialog,
-              icon: Icon(
-                Iconsax.star1,
-                size: 25,
-                color: Color(0xff0071e7),
-              ),
-            ),
-            SizedBox(
-              width: 15,
-            )
-          ],
-        ),
-        body: messages.isEmpty
-            ? Center(
-                child: Lottie.asset(
-                  'assets/loader.json',
-                  width: 100,
-                  height: 100,
+          appBar: AppBar(
+            backgroundColor: const Color(0xffFFFFFF),
+            toolbarHeight: 80,
+            title: Column(
+              children: [
+                Text(
+                  widget.doctorName,
+                  style: TextStyle(
+                    color: Color(0xff262626),
+                    fontSize: 16,
+                    // fontWeight: FontWeight.w500,
+                  ),
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: Colors.green,
+                      size: 12,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'Online',
+                      style: TextStyle(
+                        color: Color(0xff262626),
+                        fontSize: 12,
+                        // fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            centerTitle: true,
+            elevation: 1,
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: Color(0xff262626),
+                )),
+            actions: [
+              IconButton(
+                onPressed: mydialog,
+                icon: Icon(
+                  Iconsax.star1,
+                  size: 25,
+                  color: Color(0xff0071e7),
+                ),
+              ),
+              SizedBox(
+                width: 15,
               )
-            : Column(
-                children: <Widget>[
-                  // Chat messages display area
-                  Expanded(
-                      child: ListView.builder(
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      DateTime dateTime =
-                          DateTime.parse(messages[index]['date']).toLocal();
+            ],
+          ),
+          body: messages.isEmpty
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                        child: GroupedListView<dynamic, String>(
+                      elements: messages,
+                      groupBy: (element) {
+                        DateTime dateTime =
+                            DateTime.parse(element['date']).toLocal();
 
-                      String formattedTime = timeFormat.format(dateTime);
-                      return Row(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        // crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          int.parse(uid) == messages[index]['user']
-                              ? Text('')
-                              : Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text(
-                                    formattedTime,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color(0xff314165),
+                        return dateTime.day.toString();
+                      },
+                      groupHeaderBuilder: (element) {
+                        DateTime dateTime =
+                            DateTime.parse(element['date']).toLocal();
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            DateFormat.yMMMd().format(dateTime),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.amber,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                      itemBuilder: (c, element) {
+                        DateTime dateTime =
+                            DateTime.parse(element['date']).toLocal();
+                        String formattedTime = timeFormat.format(dateTime);
+                        return Row(
+                          children: [
+                            int.parse(uid) == element['user']
+                                ? Text('')
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      formattedTime,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xff314165),
+                                      ),
                                     ),
                                   ),
-                                ),
-                          Expanded(
-                            child: Bubble(
-                              margin: BubbleEdges.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              stick: true,
-                              alignment:
-                                  int.parse(uid) == messages[index]['user']
-                                      ? Alignment.topRight
-                                      : Alignment.topLeft,
-                              nip: int.parse(uid) == messages[index]['user']
-                                  ? BubbleNip.leftBottom
-                                  : BubbleNip.rightTop,
-                              color: int.parse(uid) == messages[index]['user']
-                                  ? Color(0xffF6EC72).withOpacity(0.5)
-                                  : Color(0xff7743DB).withOpacity(0.5),
-                              // style: styleSomebody,
-                              child: Text(
-                                messages[index]['message'],
-                                style: TextStyle(
-                                  //fontSize: 14,
-                                  color: Color(0xff314165),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(15),
+                                margin: EdgeInsets.all(20),
+                                // width: 200,
+
+                                // alignment: int.parse(uid) == element['user']
+                                //     ? Alignment.topRight
+                                //     : Alignment.topLeft,
+                                decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(15)),
+
+                                child: Text(
+                                  element['message'],
                                 ),
                               ),
                             ),
-                          ),
-                          int.parse(uid) == messages[index]['user']
-                              ? Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: Text(
-                                    formattedTime,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Color(0xff314165),
+                            int.parse(uid) == element['user']
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: Text(
+                                      formattedTime,
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xff314165),
+                                      ),
                                     ),
-                                  ),
-                                )
-                              : Text(''),
-                        ],
-                      );
-                    },
-                  )),
+                                  )
+                                : Text(''),
+                          ],
+                        );
+                      },
+                    )),
 
-                  // Divider line
-                  Divider(height: 5.0),
+                    // Divider line
+                    Divider(height: 5.0),
 
-                  // Message input area
-                  _buildTextComposer(uid),
-                ],
-              ),
-      ),
+                    // Message input area
+                    _buildTextComposer(uid),
+                  ],
+                )
+
+          // : Column(
+          //     children: <Widget>[
+          //       // Chat messages display area
+          //       Expanded(
+          //           child: ListView.builder(
+          //         itemCount: messages.length,
+          //         itemBuilder: (context, index) {
+          //           DateTime dateTime =
+          //               DateTime.parse(messages[index]['date']).toLocal();
+
+          //           String formattedTime = timeFormat.format(dateTime);
+          //           return Row(
+          //             //mainAxisAlignment: MainAxisAlignment.start,
+          //             // crossAxisAlignment: CrossAxisAlignment.stretch,
+          //             children: [
+          //               int.parse(uid) == messages[index]['user']
+          //                   ? Text('')
+          //                   : Padding(
+          //                       padding: const EdgeInsets.only(left: 10),
+          //                       child: Text(
+          //                         formattedTime,
+          //                         style: TextStyle(
+          //                           fontSize: 10,
+          //                           color: Color(0xff314165),
+          //                         ),
+          //                       ),
+          //                     ),
+          //               Expanded(
+          //                 child: Bubble(
+          //                   margin: BubbleEdges.symmetric(
+          //                       horizontal: 15, vertical: 10),
+          //                   stick: true,
+          //                   alignment:
+          //                       int.parse(uid) == messages[index]['user']
+          //                           ? Alignment.topRight
+          //                           : Alignment.topLeft,
+          //                   nip: int.parse(uid) == messages[index]['user']
+          //                       ? BubbleNip.leftBottom
+          //                       : BubbleNip.rightTop,
+          //                   color: int.parse(uid) == messages[index]['user']
+          //                       ? Color(0xffF6EC72).withOpacity(0.5)
+          //                       : Color(0xff7743DB).withOpacity(0.5),
+          //                   // style: styleSomebody,
+          //                   child: Text(
+          //                     messages[index]['message'],
+          //                     style: TextStyle(
+          //                       //fontSize: 14,
+          //                       color: Color(0xff314165),
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //               int.parse(uid) == messages[index]['user']
+          //                   ? Padding(
+          //                       padding: const EdgeInsets.only(right: 10.0),
+          //                       child: Text(
+          //                         formattedTime,
+          //                         style: TextStyle(
+          //                           fontSize: 10,
+          //                           color: Color(0xff314165),
+          //                         ),
+          //                       ),
+          //                     )
+          //                   : Text(''),
+          //             ],
+          //           );
+          //         },
+          //       )),
+
+          //       // Divider line
+          //       Divider(height: 5.0),
+
+          //       // Message input area
+          //       _buildTextComposer(uid),
+          //     ],
+          //   ),
+          ),
     );
   }
 

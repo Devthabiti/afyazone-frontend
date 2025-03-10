@@ -52,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     var inbox = context.read<ApiCalls>().myInbox;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
