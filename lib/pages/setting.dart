@@ -24,13 +24,17 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
           elevation: 1,
-          toolbarHeight: 100,
+          toolbarHeight: 80,
+          backgroundColor: const Color(0xffFFFFFF),
           title: Text(
             'Setting',
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Color(0xff262626),
+              fontSize: 18,
+            ),
           ),
           centerTitle: true),
       body: Container(
@@ -57,7 +61,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Profile Settings',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -70,7 +74,7 @@ class _SettingState extends State<Setting> {
                             'Manage details of your Afyazone Account',
                             style: TextStyle(
                               fontSize: 12,
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                             ),
                           ),
                         ),
@@ -136,7 +140,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Help & support',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -148,7 +152,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Get 24-hour support by contacting our support team.',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -177,7 +181,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Share App',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -189,7 +193,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'You can share the app to your friends and family.',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -215,7 +219,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Privacy Policy',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -227,7 +231,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Read our support privacy policy carefully and contact our support team',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -253,7 +257,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Terms & Condition',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -265,7 +269,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Read our terms and conditions carefully before using our app.',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -290,7 +294,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Delete Account',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -302,7 +306,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'You can request to delete your accoount',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -337,7 +341,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Logout',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626),
                               fontWeight: FontWeight.bold,
                               fontSize: 14,
                             ),
@@ -349,7 +353,7 @@ class _SettingState extends State<Setting> {
                           child: Text(
                             'Sign out of the application',
                             style: TextStyle(
-                              color: const Color(0xff314165),
+                              color: Color(0xff262626).withOpacity(0.7),
                               fontSize: 12,
                             ),
                           ),
@@ -381,7 +385,7 @@ class _SettingState extends State<Setting> {
                       child: Text(
                         'Delete Your Account',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -401,7 +405,7 @@ class _SettingState extends State<Setting> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626).withOpacity(0.7),
                             fontSize: 12,
                           ),
                           "Are you sure you want to delete your account?"),
@@ -424,7 +428,7 @@ class _SettingState extends State<Setting> {
                                 margin: const EdgeInsets.only(bottom: 20),
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Color(0xff314165),
+                                      color: Color(0xff262626),
                                     ),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Center(
@@ -459,8 +463,8 @@ class _SettingState extends State<Setting> {
                                 decoration: BoxDecoration(
                                     gradient: const LinearGradient(
                                       colors: [
-                                        Color(0xff1684A7),
-                                        Color(0xff09A599)
+                                        Color(0xff0071e7),
+                                        Color(0xff262626)
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
