@@ -6,8 +6,28 @@ class TermsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
-        title: Text('Privacy Policy'),
+        backgroundColor: const Color(0xffFFFFFF),
+        elevation: 1,
+        title: Text(
+          'Privacy Policy',
+          style: TextStyle(
+            color: Color(0xff262626),
+            fontSize: 18,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xff262626),
+            size: 20,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
