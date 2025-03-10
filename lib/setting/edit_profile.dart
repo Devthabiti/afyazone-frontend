@@ -28,9 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             validator: (val) => val!.length < 3
                 ? 'Username should be atlest 3 character long'
                 : null,
-            style: TextStyle(
-              fontSize: 15,
-            ),
+            style: TextStyle(fontSize: 15, color: Color(0xff262626)),
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
@@ -44,7 +42,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               hintText: "Username",
               hintStyle: TextStyle(
                 fontSize: 15,
-                color: Color(0xff092058).withOpacity(0.25),
+                color: Color(0xff262626).withOpacity(0.25),
               ),
             )));
   }
@@ -71,12 +69,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         value: value,
         icon: Icon(
           Icons.arrow_drop_down,
-          color: Color(0xff092058).withOpacity(0.25),
+          color: Color(0xff262626).withOpacity(0.25),
         ),
-        style: TextStyle(
-          fontSize: 15,
-          color: Color(0xff092058),
-        ),
+        style: TextStyle(fontSize: 15, color: Color(0xff262626)),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
             vertical: 12.0,
@@ -102,7 +97,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'Select Gender',
           style: TextStyle(
             fontSize: 15,
-            color: Color(0xff092058).withOpacity(0.25),
+            color: Color(0xff262626).withOpacity(0.25),
           ),
         ),
       ),
@@ -326,8 +321,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        backgroundColor: const Color(0xffFFFFFF),
+        elevation: 1,
+        title: Text(
+          'Edit Profile',
+          style: TextStyle(
+            color: Color(0xff262626),
+            fontSize: 18,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Color(0xff262626),
+            size: 20,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -362,7 +376,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               bottom: 15,
                               right: 0,
                               child: CircleAvatar(
-                                backgroundColor: Color(0xff1684A7),
+                                backgroundColor: Color(0xff0071e7),
                                 child: FaIcon(
                                   FontAwesomeIcons.pencil,
                                   size: 18,
@@ -415,7 +429,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     right: 15,
                                     child: CircleAvatar(
                                       radius: 14,
-                                      backgroundColor: Color(0xff1684A7),
+                                      backgroundColor: Color(0xff0071e7),
                                       child: FaIcon(
                                         FontAwesomeIcons.pencil,
                                         size: 15,
@@ -462,7 +476,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xff1684A7), Color(0xff09A599)],
+                      colors: [Color(0xff0071e7), Color(0xff262626)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [0.0, 1.0],
@@ -508,7 +522,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: Text(
                         'Something went Wrong',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -528,7 +542,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                             fontSize: 12,
                           ),
                           "Oops! It looks like Something not correct. \nor username is already used"),
@@ -546,8 +560,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
