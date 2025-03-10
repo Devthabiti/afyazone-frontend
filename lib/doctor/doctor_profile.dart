@@ -35,6 +35,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 val!.length < 10 ? 'Complete Phone Number' : null,
             style: TextStyle(
               fontSize: 15,
+              color: Color(0xff262626),
             ),
             keyboardType: TextInputType.phone,
             maxLength: 10,
@@ -50,7 +51,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               hintText: "Enter Your Payment Number",
               hintStyle: TextStyle(
                 fontSize: 15,
-                color: Color(0xff092058).withOpacity(0.25),
+                color: Color(0xff262626).withOpacity(0.25),
               ),
             )));
   }
@@ -269,7 +270,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: const LinearGradient(
-                    colors: [Color(0xff1684A7), Color(0xff09A599)],
+                    colors: [Color(0xff0071e7), Color(0xff262626)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [0.0, 1.0],
@@ -282,7 +283,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     style: TextStyle(
                         fontFamily: 'Manane',
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -306,7 +307,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xff09A599).withOpacity(0.5),
+                      Color(0xff0071e7).withOpacity(0.4),
                       Colors.transparent,
                     ],
                     begin: Alignment.bottomCenter,
@@ -320,7 +321,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Text(
-                          'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}',
+                          'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}'
+                              .toUpperCase(),
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
@@ -415,104 +417,120 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
               ),
             ),
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => CircularProgressIndicator(
+              color: Color(0xff0071e7),
+            ),
           ),
           const SizedBox(
             height: 15,
           ),
-          Card(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xff09A599).withOpacity(0.25)),
-                  child: Center(
-                      child: Text(
-                    'Works at ${widget.doctor['hospital']}',
-                    style: TextStyle(
-                        color: Color(0xff314165),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  )),
-                ),
-                ListTile(
-                  title: Text(
-                    'Availability',
-                    style: TextStyle(
-                        fontFamily: 'Manane',
-                        color: const Color(0xff09A599).withOpacity(0.65),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                      '${widget.doctor['start_day']}- ${widget.doctor['end_day']}'),
-                  trailing: Text(
-                    'TZS ${widget.doctor['price']}/= per person',
-                    style: TextStyle(
-                      fontFamily: 'Manane',
-                      color: Color(0xff314165),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
             children: [
-              Card(
-                child: Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Specialize on'),
-                      Text(
-                        '${widget.doctor['specialize']}',
-                        style: TextStyle(
-                            fontFamily: 'Manane',
-                            color: const Color(0xff09A599).withOpacity(0.65),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
+              Container(
+                width: double.infinity,
+                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xff0071e7).withOpacity(0.6)),
+                child: Center(
+                    child: Text(
+                  'Works at ${widget.doctor['hospital']}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                )),
+              ),
+              ListTile(
+                title: Text(
+                  'Availability',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      color: const Color(0xff262626),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  '${widget.doctor['start_day']}- ${widget.doctor['end_day']}',
+                  style: TextStyle(
+                    fontFamily: 'Manane',
+                    color: const Color(0xff262626).withOpacity(0.6),
                   ),
                 ),
-              ),
-              Card(
-                child: Container(
-                  height: 100,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Location'),
-                      Text(
-                        '${widget.doctor['region']} - ${widget.doctor['district']}',
-                        style: TextStyle(
-                            fontFamily: 'Manane',
-                            color: const Color(0xff09A599).withOpacity(0.65),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
+                trailing: Text(
+                  'TZS ${widget.doctor['price']}/= per person',
+                  style: TextStyle(
+                    fontFamily: 'Manane',
+                    color: const Color(0xff262626).withOpacity(0.6),
+                    fontSize: 14,
+                    // fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ],
           ),
+          Divider(),
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Specialize on',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      color: const Color(0xff262626),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '${widget.doctor['specialize']}',
+                  style: TextStyle(
+                    fontFamily: 'Manane',
+                    color: const Color(0xff262626).withOpacity(0.6),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Divider(),
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Location',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      color: const Color(0xff262626),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'Region : ${widget.doctor['region']}',
+                      style: TextStyle(
+                        fontFamily: 'Manane',
+                        color: const Color(0xff262626).withOpacity(0.6),
+                      ),
+                    ),
+                    Text(
+                      'District : ${widget.doctor['district']}',
+                      style: TextStyle(
+                        fontFamily: 'Manane',
+                        color: const Color(0xff262626).withOpacity(0.6),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Divider(),
           SizedBox(
             height: 10,
           ),
@@ -522,7 +540,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               'About Doctor',
               style: TextStyle(
                   fontFamily: 'Manane',
-                  color: Color(0xff314165),
+                  color: Color(0xff262626),
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
             ),
@@ -531,13 +549,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-                color: const Color(0xff09A599).withOpacity(0.25),
+                color: const Color(0xff0071e7).withOpacity(0.25),
                 borderRadius: BorderRadius.circular(20)),
             child: Text(
               widget.doctor['bio'],
               style: TextStyle(
                 fontFamily: 'Manane',
-                color: Color(0xff314165),
+                color: Color(0xff262626),
               ),
             ),
           ),
@@ -549,7 +567,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
             child: Text('Reviews',
                 style: TextStyle(
                     fontFamily: 'Manane',
-                    color: Color(0xff314165),
+                    color: Color(0xff262626),
                     fontSize: 16,
                     fontWeight: FontWeight.bold)),
           ),
@@ -562,7 +580,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       child: Text('No review yet',
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                           ))),
                 )
               : ListView.builder(
@@ -607,7 +625,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                     ['username'],
                                 style: TextStyle(
                                   fontFamily: 'Manane',
-                                  color: Color(0xff314165),
+                                  color: Color(0xff262626),
                                 )),
                             subtitle:
                                 Text(widget.doctor['review'][index]['review']),
@@ -617,7 +635,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                           ),
                           Container(
                             height: 40,
-                            color: const Color(0xff09A599).withOpacity(0.25),
+                            color: const Color(0xff0071e7).withOpacity(0.25),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -638,7 +656,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 ),
                                 Text('$formattedDate | $formattedTime',
                                     style: TextStyle(
-                                      color: Color(0xff314165),
+                                      fontFamily: 'Manane',
+                                      color: Color(0xff262626),
                                     ))
                               ],
                             ),
@@ -704,7 +723,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
-                                  color: Color(0xff314165),
+                                  color: Color(0xff262626),
                                 ),
                               ),
                               Padding(
@@ -712,7 +731,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                 child: Text(
                                   "To chat with Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']} , you must first pay TZS ${widget.doctor['price']}/= Please note, this is not treatment but rather doctor's advice.",
                                   style: TextStyle(
-                                    color: Color(0xff314165),
+                                    color: Color(0xff262626).withOpacity(0.6),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -734,7 +753,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                         'Payment Number',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0xff02050a),
+                                          color: Color(0xff262626),
                                         ),
                                       ),
                                     ),
@@ -756,8 +775,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                                 BorderRadius.circular(7),
                                             gradient: const LinearGradient(
                                               colors: [
-                                                Color(0xff1684A7),
-                                                Color(0xff09A599)
+                                                Color(0xff0071e7),
+                                                Color(0xff262626)
                                               ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
@@ -807,7 +826,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
               'Payment Confimations',
               style: TextStyle(
                   fontFamily: 'Manane',
-                  color: const Color(0xff1684A7),
+                  color: Color(0xff262626),
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
             ),
@@ -816,7 +835,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 Text(
                     style: TextStyle(
                       fontFamily: 'Manane',
-                      color: Color(0xff314165),
+                      color: Color(0xff262626).withOpacity(0.6),
                     ),
                     '1. You will receive a prompt from your  mobile money enter your PIN to approve the amount to be deducted.\n\n2. Please Enter your mobile money PIN'),
                 const SizedBox(
@@ -829,7 +848,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: const LinearGradient(
-                      colors: [Color(0xff1684A7), Color(0xff09A599)],
+                      colors: [Color(0xff0071e7), Color(0xff262626)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [0.0, 1.0],
@@ -886,7 +905,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       child: Text(
                         'Something went Wrong',
                         style: TextStyle(
-                          color: Color(0xff314165),
+                          color: Color(0xff262626),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -906,7 +925,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Manane',
-                            color: Color(0xff314165),
+                            color: Color(0xff262626),
                             fontSize: 12,
                           ),
                           "Oops! Payment was not completed. \nPlease try again later "),
@@ -924,8 +943,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             decoration: BoxDecoration(
                                 gradient: const LinearGradient(
                                   colors: [
-                                    Color(0xff1684A7),
-                                    Color(0xff09A599)
+                                    Color(0xff0071e7),
+                                    Color(0xff262626)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
