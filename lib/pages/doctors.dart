@@ -176,7 +176,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                 ),
                               ),
                               trailing: Container(
-                                  width: 100,
+                                  width: 70,
                                   //color: Colors.amber,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -184,7 +184,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                       Icon(
                                         Icons.online_prediction,
                                         size: 20,
-                                        color: Colors.red,
+                                        color: Colors.green,
                                       ),
                                       SizedBox(
                                         width: 5,
