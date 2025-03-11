@@ -192,7 +192,7 @@ class _InboxPageState extends State<InboxPage> {
                     Icon(
                       Icons.circle,
                       color: Colors.green,
-                      size: 12,
+                      size: 14,
                     ),
                     SizedBox(
                       width: 5,
@@ -201,7 +201,7 @@ class _InboxPageState extends State<InboxPage> {
                       'Online',
                       style: TextStyle(
                         color: Color(0xff262626),
-                        fontSize: 12,
+                        fontSize: 14,
                         // fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -242,91 +242,121 @@ class _InboxPageState extends State<InboxPage> {
                     height: 100,
                   ),
                 )
-              : Column(
-                  children: [
-                    Expanded(
-                        child: GroupedListView<dynamic, String>(
-                      elements: messages,
-                      groupBy: (element) {
-                        DateTime dateTime =
-                            DateTime.parse(element['date']).toLocal();
+              : Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/bgb.jpg'),
+                          fit: BoxFit.cover,
+                          opacity: 0.5)),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: GroupedListView<dynamic, String>(
+                        elements: messages,
+                        groupBy: (element) {
+                          DateTime dateTime =
+                              DateTime.parse(element['date']).toLocal();
 
-                        return dateTime.day.toString();
-                      },
-                      groupHeaderBuilder: (element) {
-                        DateTime dateTime =
-                            DateTime.parse(element['date']).toLocal();
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            DateFormat.yMMMd().format(dateTime),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                color: Colors.amber,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      },
-                      itemBuilder: (c, element) {
-                        DateTime dateTime =
-                            DateTime.parse(element['date']).toLocal();
-                        String formattedTime = timeFormat.format(dateTime);
-                        return Row(
-                          children: [
-                            int.parse(uid) == element['user']
-                                ? Text('')
-                                : Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      formattedTime,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: Color(0xff314165),
-                                      ),
-                                    ),
-                                  ),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.all(15),
-                                margin: EdgeInsets.all(20),
-                                // width: 200,
-
-                                // alignment: int.parse(uid) == element['user']
-                                //     ? Alignment.topRight
-                                //     : Alignment.topLeft,
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(15)),
-
-                                child: Text(
-                                  element['message'],
+                          return dateTime.day.toString();
+                        },
+                        groupHeaderBuilder: (element) {
+                          DateTime dateTime =
+                              DateTime.parse(element['date']).toLocal();
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Bubble(
+                              stick: true,
+                              alignment: Alignment.center,
+                              color: Color.fromRGBO(212, 234, 244, 1.0),
+                              child: Text(
+                                DateFormat.yMMMd().format(dateTime),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Color(0xff262626),
+                                  fontSize: 12,
+                                  //fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            int.parse(uid) == element['user']
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: Text(
-                                      formattedTime,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: Color(0xff314165),
+                          );
+                        },
+                        itemBuilder: (c, element) {
+                          DateTime dateTime =
+                              DateTime.parse(element['date']).toLocal();
+                          String formattedTime = timeFormat.format(dateTime);
+                          return Row(
+                            children: [
+                              int.parse(uid) == element['user']
+                                  ? Text('')
+                                  : Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        formattedTime,
+                                        style: TextStyle(
+                                          color: Color(0xff262626),
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  )
-                                : Text(''),
-                          ],
-                        );
-                      },
-                    )),
+                              Expanded(
+                                child: Bubble(
+                                  elevation: 1,
+                                  shadowColor: Colors.green,
+                                  margin: BubbleEdges.all(15),
+                                  color: int.parse(uid) == element['user']
+                                      ? Color.fromRGBO(225, 255, 199, 1.0)
+                                      : Colors.white,
+                                  alignment: int.parse(uid) == element['user']
+                                      ? Alignment.topRight
+                                      : Alignment.topLeft,
+                                  child: Text(
+                                    element['message'],
+                                  ),
+                                ),
+                                //  Container(
+                                //   padding: EdgeInsets.all(15),
+                                //   margin: EdgeInsets.all(20),
+                                //   // width: 200,
 
-                    // Divider line
-                    Divider(height: 5.0),
+                                //   // alignment: int.parse(uid) == element['user']
+                                //   //     ? Alignment.topRight
+                                //   //     : Alignment.topLeft,
+                                //   decoration: BoxDecoration(
+                                //       color: Colors.amber,
+                                //       borderRadius: BorderRadius.circular(15)),
 
-                    // Message input area
-                    _buildTextComposer(uid),
-                  ],
+                                //   child: Text(
+                                //     element['message'],
+                                //   ),
+                                // ),
+                              ),
+                              int.parse(uid) == element['user']
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: Text(
+                                        formattedTime,
+                                        style: TextStyle(
+                                          color: Color(0xff262626),
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                  : Text(''),
+                            ],
+                          );
+                        },
+                      )),
+
+                      // Divider line
+                      Divider(height: 5.0),
+
+                      // Message input area
+                      _buildTextComposer(uid),
+                    ],
+                  ),
                 )
 
           // : Column(
