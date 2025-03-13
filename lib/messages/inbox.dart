@@ -244,10 +244,11 @@ class _InboxPageState extends State<InboxPage> {
                 )
               : Container(
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/bgb.jpg'),
-                          fit: BoxFit.cover,
-                          opacity: 0.5)),
+                    image: DecorationImage(
+                        image: AssetImage('assets/bgb.jpg'),
+                        fit: BoxFit.cover,
+                        opacity: 0.25),
+                  ),
                   child: Column(
                     children: [
                       Expanded(
@@ -267,7 +268,7 @@ class _InboxPageState extends State<InboxPage> {
                             child: Bubble(
                               stick: true,
                               alignment: Alignment.center,
-                              color: Color.fromRGBO(212, 234, 244, 1.0),
+                              color: Color.fromARGB(255, 184, 222, 240),
                               child: Text(
                                 DateFormat.yMMMd().format(dateTime),
                                 textAlign: TextAlign.center,
@@ -295,18 +296,18 @@ class _InboxPageState extends State<InboxPage> {
                                         style: TextStyle(
                                           color: Color(0xff262626),
                                           fontSize: 10,
-                                          fontWeight: FontWeight.bold,
+                                          // fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
                               Expanded(
                                 child: Bubble(
                                   elevation: 1,
-                                  shadowColor: Colors.green,
+                                  shadowColor: Colors.grey,
                                   margin: BubbleEdges.all(15),
                                   color: int.parse(uid) == element['user']
                                       ? Color.fromRGBO(225, 255, 199, 1.0)
-                                      : Colors.white,
+                                      : Color.fromARGB(255, 236, 241, 245),
                                   alignment: int.parse(uid) == element['user']
                                       ? Alignment.topRight
                                       : Alignment.topLeft,
@@ -340,7 +341,7 @@ class _InboxPageState extends State<InboxPage> {
                                         style: TextStyle(
                                           color: Color(0xff262626),
                                           fontSize: 10,
-                                          fontWeight: FontWeight.bold,
+                                          //fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     )
@@ -791,3 +792,29 @@ class _InboxPageState extends State<InboxPage> {
             )));
   }
 }
+
+// class CallPage extends StatelessWidget {
+//   const CallPage(
+//       {Key? key,
+//       required this.callID,
+//       required this.userId,
+//       required this.userName})
+//       : super(key: key);
+//   final String callID;
+//   final String userId;
+//   final String userName;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ZegoUIKitPrebuiltCall(
+//       appID: 1324622238,
+//       appSign:
+//           '74a6ac0ab735293c0138def5e5ab7f7dab7d81b614a2bedd845ada06587bff2d',
+//       userID: 'user_id',
+//       userName: 'user_name',
+//       callID: callID,
+//       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
+//       config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall(),
+//     );
+//   }
+// }
