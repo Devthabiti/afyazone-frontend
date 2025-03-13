@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
@@ -19,10 +21,44 @@ class NewsDetails extends StatefulWidget {
 class _NewsDetailsState extends State<NewsDetails> {
   final TextEditingController _textController = TextEditingController();
   bool _isComposing = false;
+
+  // Fetch otp api **************************
+
+  void postData(postId, clientId) async {
+    var url = Uri.parse('http://157.230.183.103/likes/');
+
+    // Defined headers
+    Map<String, String> headers = {
+      //'Authorization': 'Basic bWF0aWt1OmJpcGFzMTIzNA==',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    // Defined request body
+    var body = {
+      "post_id": postId.toString(),
+      "client_id": clientId.toString(),
+    };
+
+    // POST request
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: json.encode(body),
+      //encoding: Encoding.getByName('utf-8'),
+    );
+
+    // Check the status code of the response
+    if (response.statusCode == 200) {
+      print(response.body);
+      final data = context.read<ApiCalls>();
+      data.fetcharticles();
+    }
+  }
+
   @override
   void initState() {
     final data = context.read<ApiCalls>();
-
     data.fetcharticles();
     super.initState();
   }
@@ -35,7 +71,12 @@ class _NewsDetailsState extends State<NewsDetails> {
     var uid = context.watch<ApiCalls>().currentUser;
 
     //filter likes
-    List lk = widget.data['postlikes'];
+    var articles = context.watch<ApiCalls>().articles;
+    List single = articles
+        .where((element) => element['id'] == widget.data['id'])
+        .toList();
+    // print(single.first);
+    List lk = single.first['postlikes'];
     List likes =
         lk.where((element) => element['client'] == int.parse(uid)).toList();
     return GestureDetector(
@@ -96,7 +137,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       physics: NeverScrollableScrollPhysics(),
                       children: [
                         CachedNetworkImage(
-                          imageUrl: '${widget.data['image']}',
+                          imageUrl: '${single.first['image']}',
                           imageBuilder: (context, imageProvider) => Container(
                             child: Image(image: imageProvider),
                             // decoration: BoxDecoration(
@@ -113,7 +154,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                           padding: const EdgeInsets.only(
                               left: 5, right: 5, bottom: 5, top: 15),
                           child: Text(
-                            widget.data['title'].toUpperCase(),
+                            single.first['title'].toUpperCase(),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -129,7 +170,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                             bottom: 10,
                           ),
                           child: Text(
-                            widget.data['content'],
+                            single.first['content'],
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w200,
@@ -146,21 +187,33 @@ class _NewsDetailsState extends State<NewsDetails> {
                             Row(
                               children: [
                                 likes.isNotEmpty
-                                    ? Container(
-                                        height: 50,
-                                        width: 40,
-                                        // color: Colors.amber,
-                                        child: Lottie.asset('assets/heart.json',
-                                            repeat: false, fit: BoxFit.cover),
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          postData(single.first['id'], uid);
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          width: 40,
+                                          //color: Colors.amber,
+                                          child: Lottie.asset(
+                                              'assets/heart.json',
+                                              repeat: false,
+                                              fit: BoxFit.cover),
+                                        ),
                                       )
-                                    : Container(
-                                        padding: EdgeInsets.only(left: 5),
-                                        height: 50,
-                                        width: 40,
-                                        // color: Colors.amber,
-                                        child: Icon(
-                                          Iconsax.heart,
-                                          color: Color(0xff262626),
+                                    : GestureDetector(
+                                        onTap: () {
+                                          postData(single.first['id'], uid);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(left: 5),
+                                          height: 50,
+                                          width: 40,
+                                          // color: Colors.amber,
+                                          child: Icon(
+                                            Iconsax.heart,
+                                            color: Color(0xff262626),
+                                          ),
                                         ),
                                       ),
                                 Padding(
@@ -170,7 +223,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       color: Color(0xff262626),
                                       fontSize: 14,
                                     ),
-                                    widget.data['likes'].toString(),
+                                    single.first['likes'].toString(),
                                   ),
                                 )
                               ],
@@ -188,7 +241,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       color: Color(0xff262626),
                                       fontSize: 14,
                                     ),
-                                    widget.data['comments'].length.toString(),
+                                    single.first['comments'].length.toString(),
                                   ),
                                 )
                               ],
@@ -206,7 +259,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       color: Color(0xff262626),
                                       fontSize: 14,
                                     ),
-                                    widget.data['views'].toString(),
+                                    single.first['views'].toString(),
                                   ),
                                 )
                               ],
@@ -218,7 +271,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                         ),
                       ]),
                   //hapa list view nyingine
-                  widget.data['comments'].isEmpty
+                  single.first['comments'].isEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Center(
@@ -233,19 +286,19 @@ class _NewsDetailsState extends State<NewsDetails> {
                       : ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: widget.data['comments'].length,
+                          itemCount: single.first['comments'].length,
                           itemBuilder: (context, index) {
                             var timestamp =
-                                widget.data['comments'][index]['created_at'];
+                                single.first['comments'][index]['created_at'];
                             var convertedTimestamp =
                                 DateTime.parse(timestamp).toLocal();
                             var result = GetTimeAgo.parse(convertedTimestamp);
                             return ListTile(
-                              leading: widget.data['comments'][index]
+                              leading: single.first['comments'][index]
                                           ['client_profile']['image'] ==
                                       null
                                   ? CircleAvatar(
-                                      backgroundImage: widget.data['comments']
+                                      backgroundImage: single.first['comments']
                                                       [index]['client_profile']
                                                   ['gender'] ==
                                               "Male"
@@ -255,7 +308,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                     )
                                   : CachedNetworkImage(
                                       imageUrl:
-                                          'http://157.230.183.103${widget.data['comments'][index]['client_profile']['image']}',
+                                          'http://157.230.183.103${single.first['comments'][index]['client_profile']['image']}',
                                       imageBuilder: (context, imageProvider) =>
                                           CircleAvatar(
                                         backgroundImage: imageProvider,
@@ -271,7 +324,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Text(
-                                      widget.data['comments'][index]
+                                      single.first['comments'][index]
                                           ['client_profile']['username'],
                                       style: TextStyle(
                                         fontSize: 15,
@@ -290,7 +343,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 ],
                               ),
                               subtitle: Text(
-                                widget.data['comments'][index]['content'],
+                                single.first['comments'][index]['content'],
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Manane',
