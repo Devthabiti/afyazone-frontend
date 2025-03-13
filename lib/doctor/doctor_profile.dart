@@ -225,72 +225,88 @@ class _DoctorProfileState extends State<DoctorProfile> {
     DateFormat dateFormat = DateFormat('yyyy/MM/dd');
     DateFormat timeFormat = DateFormat('HH:mm');
 
+    var miamala = context.watch<ApiCalls>().transactions;
+    var uid = context.watch<ApiCalls>().currentUser;
+    List trans = miamala
+        .where((element) =>
+            element['client'] == int.parse(uid) &&
+            element['doctor'] == widget.doctor['user'])
+        .toList();
+
     return Scaffold(
-      // appBar: AppBar(
-      //     toolbarHeight: 100,
-      //     automaticallyImplyLeading: false,
-      //     title: ListTile(
-      //       leading: GestureDetector(
-      //         onTap: () {
-      //           Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                   builder: (context) => ImageViewPage(
-      //                       name:
-      //                           'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}',
-      //                       imageUrl:
-      //                           'http://157.230.183.103${widget.doctor['image']}')));
-      //         },
-      //         child: CachedNetworkImage(
-      //           imageUrl: 'http://157.230.183.103${widget.doctor['image']}',
-      //           imageBuilder: (context, imageProvider) => CircleAvatar(
-      //             radius: 25,
-      //             backgroundImage: imageProvider,
-      //           ),
-      //           placeholder: (context, url) => CircularProgressIndicator(),
-      //         ),
-      //       ),
-      //       title: Text(
-      //         'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}',
-      //         style: TextStyle(color: Colors.white),
-      //       ),
-      //       subtitle: Text(
-      //         '${widget.doctor['specialize']}',
-      //         style: TextStyle(color: Colors.white),
-      //       ),
-      //     )),
       bottomNavigationBar: BottomAppBar(
-        child: Container(
-          child: Center(
-            child: GestureDetector(
-              onTap: mydialog,
-              child: Container(
-                height: 45,
-                width: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xff0071e7), Color(0xff262626)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp, // This is the default
+        child: trans.isEmpty
+            ? Container(
+                child: Center(
+                  child: GestureDetector(
+                    onTap: mydialog,
+                    child: Container(
+                      height: 45,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xff0071e7), Color(0xff262626)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp, // This is the default
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'CHAT WITH DOCTOR',
+                          style: TextStyle(
+                              fontFamily: 'Manane',
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
+              )
+            : Container(
                 child: Center(
-                  child: Text(
-                    'CHAT WITH DOCTOR',
-                    style: TextStyle(
-                        fontFamily: 'Manane',
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InboxPage(
+                                  senderID: uid,
+                                  receiverID: widget.doctor['user'].toString(),
+                                  doctorName:
+                                      'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}')));
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xff0071e7), Color(0xff262626)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp, // This is the default
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'CHAT ',
+                          style: TextStyle(
+                              fontFamily: 'Manane',
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
         height: 100,
         elevation: 10,
       ),
