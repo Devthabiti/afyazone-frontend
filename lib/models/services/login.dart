@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:afya/models/services/otp.dart';
+import 'package:afya/models/services/utls.dart';
 import 'package:afya/terms.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
 // Fetch otp api **************************
   void postData() async {
-    var url = Uri.parse('http://157.230.183.103/send-otp/');
+    var url = Uri.parse('${Api.baseUrl}send-otp/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
 
 // Login bypass otp **************************
   void postLogin() async {
-    var url = Uri.parse('http://157.230.183.103/login/');
+    var url = Uri.parse('${Api.baseUrl}login/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -140,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
       pref.setString('token', iyoo['token']);
 
       var newResponse = await http.post(
-        Uri.parse('http://157.230.183.103/details/'),
+        Uri.parse('${Api.baseUrl}details/'),
         body: json.encode({'id': userId}),
         headers: headers,
       );

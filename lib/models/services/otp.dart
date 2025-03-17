@@ -5,6 +5,7 @@ import 'package:afya/client_nav.dart';
 import 'package:afya/doctor/doctor_complete_profile.dart';
 import 'package:afya/doctor/doctor_nav.dart';
 import 'package:afya/models/services/complete_prodile.dart';
+import 'package:afya/models/services/utls.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:lottie/lottie.dart';
@@ -78,7 +79,7 @@ class _OtpPageState extends State<OtpPage> {
 
 // Fetch otp api **************************
   void postData() async {
-    var url = Uri.parse('http://157.230.183.103/login/');
+    var url = Uri.parse('${Api.baseUrl}login/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -110,7 +111,7 @@ class _OtpPageState extends State<OtpPage> {
       pref.setString('token', iyoo['token']);
 
       var newResponse = await http.post(
-        Uri.parse('http://157.230.183.103/details/'),
+        Uri.parse('${Api.baseUrl}details/'),
         body: json.encode({'id': userId}),
         headers: headers,
       );
