@@ -290,45 +290,85 @@ class _DoctorsPageState extends State<DoctorsPage> {
                               subtitle: Container(
                                 // color: Colors.amber,
                                 width: 120,
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: RatingBar.builder(
-                                        initialRating: 3,
-                                        direction: Axis.horizontal,
-                                        // allowHalfRating: true,
-                                        itemCount: 4,
-                                        itemSize: 15,
-                                        ignoreGestures: true,
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.diamond,
-                                          color: const Color(0xfffe0002),
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                          rate = rating;
-                                          // print(rate);
-                                        },
+                                child: doctors[index]['doctor_level'] == null
+                                    ? Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: RatingBar.builder(
+                                              initialRating: 1,
+                                              direction: Axis.horizontal,
+                                              // allowHalfRating: true,
+                                              itemCount: 4,
+                                              itemSize: 15,
+                                              ignoreGestures: true,
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.diamond,
+                                                color: const Color(0xfffe0002),
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                rate = rating;
+                                                // print(rate);
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, bottom: 3),
+                                            child: Text(
+                                              '( EN )',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                fontSize: 12,
+                                                color: const Color(0xff262626),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: RatingBar.builder(
+                                              initialRating: doctors[index]
+                                                  ['doctor_level']['value'],
+
+                                              direction: Axis.horizontal,
+                                              // allowHalfRating: true,
+                                              itemCount: 4,
+                                              itemSize: 15,
+                                              ignoreGestures: true,
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.diamond,
+                                                color: const Color(0xfffe0002),
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                rate = rating;
+                                                // print(rate);
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, bottom: 3),
+                                            child: Text(
+                                              doctors[index]['doctor_level']
+                                                  ['level_type'],
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                fontSize: 12,
+                                                color: const Color(0xff262626),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, bottom: 3),
-                                      child: Text(
-                                        '( MD )',
-                                        style: TextStyle(
-                                          fontFamily: 'Manane',
-                                          fontSize: 12,
-                                          color: const Color(0xff262626)
-                                              .withOpacity(0.6),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                               trailing: Text(
-                                'Total Patient : 12',
+                                'Total Patient : ${doctors[index]['patient'].length}',
                                 style: TextStyle(
                                   fontFamily: 'Manane',
                                   color:
