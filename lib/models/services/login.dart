@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
 // Fetch otp api **************************
   void postData() async {
-    var url = Uri.parse('${Api.baseUrl}send-otp/');
+    var url = Uri.parse('${Api.baseUrl}/send-otp/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
 
 // Login bypass otp **************************
   void postLogin() async {
-    var url = Uri.parse('${Api.baseUrl}login/');
+    var url = Uri.parse('${Api.baseUrl}/login/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
       pref.setString('token', iyoo['token']);
 
       var newResponse = await http.post(
-        Uri.parse('${Api.baseUrl}details/'),
+        Uri.parse('${Api.baseUrl}/details/'),
         body: json.encode({'id': userId}),
         headers: headers,
       );

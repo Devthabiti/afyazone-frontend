@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import 'doctor_news_details.dart';
 import 'doctor_search.dart';
 
@@ -81,7 +82,7 @@ class _NewsDoctorState extends State<NewsDoctor> {
   // Fetch otp api **************************
 
   void postData(postId, clientId) async {
-    var url = Uri.parse(' http://157.230.183.103/likes/');
+    var url = Uri.parse(' ${Api.baseUrl}/likes/');
 
     // Defined headers
     Map<String, String> headers = {

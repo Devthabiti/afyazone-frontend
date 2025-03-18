@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class CompleteDoctorProfile extends StatefulWidget {
   const CompleteDoctorProfile({super.key});
@@ -494,7 +495,7 @@ class _CompleteDoctorProfileState extends State<CompleteDoctorProfile> {
 
     // PATCH request
     var response = await dio.patch(
-      'http://157.230.183.103/update-doctor-profile/',
+      '${Api.baseUrl}/update-doctor-profile/',
       data: iyoData,
     );
 

@@ -21,6 +21,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../doctor/doctor_profile.dart';
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import '../news/news_details.dart';
 
 class HomePage extends StatefulWidget {
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: CachedNetworkImage(
-                        imageUrl: 'http://157.230.183.103${data['image']}',
+                        imageUrl: '${Api.baseUrl}${data['image']}',
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           radius: 25,
                           backgroundImage: imageProvider,
@@ -266,11 +267,11 @@ class _HomePageState extends State<HomePage> {
                                                   name:
                                                       'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}',
                                                   imageUrl:
-                                                      'http://157.230.183.103${doctors[index]['image']}')));
+                                                      '${Api.baseUrl}${doctors[index]['image']}')));
                                     },
                                     child: CachedNetworkImage(
                                       imageUrl:
-                                          'http://157.230.183.103${doctors[index]['image']}',
+                                          '${Api.baseUrl}${doctors[index]['image']}',
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
                                         margin: EdgeInsets.all(15),
@@ -666,7 +667,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 CachedNetworkImage(
                   imageUrl:
-                      'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
+                      '${Api.baseUrl}/images/articles/Front-Page-Stock-Image-Low-resolution-1-1.png',
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.all(15),
                     height: 80,
@@ -957,7 +958,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       CachedNetworkImage(
                         imageUrl:
-                            'http://157.230.183.103/images/articles/human-fetus-prenatal-development-stage-womb-1.jpg',
+                            '${Api.baseUrl}/images/articles/Front-Page-Stock-Image-Low-resolution-1-1.png',
                         imageBuilder: (context, imageProvider) => Container(
                           margin: EdgeInsets.all(15),
                           height: 80,

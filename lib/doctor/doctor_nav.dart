@@ -66,7 +66,7 @@ class _DoctorNavState extends State<DoctorNav> {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
     final uid = decodedToken['user_id'].toString();
     print('my UID is $uid');
-    var url = Uri.parse('${Api.baseUrl}update_doctor_status/');
+    var url = Uri.parse('${Api.baseUrl}/update_doctor_status/');
     // print('my UID is $uid');
 
     // Defined headers

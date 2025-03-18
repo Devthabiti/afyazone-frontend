@@ -28,7 +28,7 @@ class _FirstPageState extends State<FirstPage> {
     var token = prefs.getString('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
     var userId = decodedToken['user_id'];
-    var url = Uri.parse('${Api.baseUrl}details/');
+    var url = Uri.parse('${Api.baseUrl}/details/');
 
     // Defined headers
     Map<String, String> headers = {

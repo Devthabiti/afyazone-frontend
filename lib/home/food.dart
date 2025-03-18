@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import '../news/search_news.dart';
 
 class Food extends StatefulWidget {
@@ -80,7 +81,7 @@ class _FoodState extends State<Food> {
   // Fetch otp api **************************
 
   void postData(postId, clientId) async {
-    var url = Uri.parse('http://157.230.183.103/likes/');
+    var url = Uri.parse('${Api.baseUrl}/likes/');
 
     // Defined headers
     Map<String, String> headers = {

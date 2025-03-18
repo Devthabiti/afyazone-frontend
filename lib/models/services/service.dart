@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:afya/models/providers/token_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +8,7 @@ import './utls.dart';
 //fetch User Details
 fetchClientDetails() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var url = Uri.parse('${Api.baseUrl}view-client-profile/');
+  var url = Uri.parse('${Api.baseUrl}/view-client-profile/');
 
   var token = prefs.getString('token');
   Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
@@ -41,7 +40,7 @@ fetchClientDetails() async {
 
 //fetching list of doctors
 fetchDoctors() async {
-  var url = Uri.parse('${Api.baseUrl}doctors/');
+  var url = Uri.parse('${Api.baseUrl}/doctors/');
   // Defined headers
   Map<String, String> headers = {
     //'Authorization': ' Bearer $token',
@@ -71,7 +70,7 @@ fetchInboxes() async {
   var userId = decodedToken['user_id'];
 
   var response = await http.get(
-    Uri.parse('${Api.baseUrl}my-messages/$userId/'),
+    Uri.parse('${Api.baseUrl}/my-messages/$userId/'),
   );
 
   if (response.statusCode == 200) {
@@ -85,7 +84,7 @@ fetchInboxes() async {
 //fetching 1 vs 1 chat
 getChats(sId, rId) async {
   var response = await http.get(
-    Uri.parse('${Api.baseUrl}get-messages/$sId/$rId/'),
+    Uri.parse('${Api.baseUrl}/get-messages/$sId/$rId/'),
   );
   if (response.statusCode == 200) {
     List iyoo = json.decode(utf8.decode(response.bodyBytes));
@@ -98,7 +97,7 @@ getChats(sId, rId) async {
 //fetching articles and story
 getnews() async {
   var response = await http.get(
-    Uri.parse('${Api.baseUrl}show-article/'),
+    Uri.parse('${Api.baseUrl}/show-article/'),
   );
   if (response.statusCode == 200) {
     List iyoo = json.decode(utf8.decode(response.bodyBytes));
@@ -111,7 +110,7 @@ getnews() async {
 //fetching articles and story
 gettransaction() async {
   var response = await http.get(
-    Uri.parse('${Api.baseUrl}show-transaction/'),
+    Uri.parse('${Api.baseUrl}/show-transaction/'),
   );
   if (response.statusCode == 200) {
     List iyoo = json.decode(response.body);
@@ -124,7 +123,7 @@ gettransaction() async {
 //fetching 1 vs 1 chat
 fetchvievs(postId) async {
   var response = await http
-      .post(Uri.parse('${Api.baseUrl}views/'), body: {"post_id": postId});
+      .post(Uri.parse('${Api.baseUrl}/views/'), body: {"post_id": postId});
   if (response.statusCode == 200) {
     var iyoo = json.decode(response.body);
     return iyoo;
@@ -136,7 +135,7 @@ fetchvievs(postId) async {
 //fetching all ads
 getads() async {
   var response = await http.get(
-    Uri.parse('${Api.baseUrl}ads/'),
+    Uri.parse('${Api.baseUrl}/ads/'),
   );
   if (response.statusCode == 200) {
     List iyoo = json.decode(response.body);

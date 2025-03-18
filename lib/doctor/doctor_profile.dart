@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import 'doctor_image.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,7 +72,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
 
     var response = await http.post(
       Uri.parse(
-        'http://157.230.183.103/send-messages/',
+        '${Api.baseUrl}/send-messages/',
       ),
       body: m,
     );
@@ -168,7 +169,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
 //post data
   void postData(id) async {
     var uid = context.read<ApiCalls>().currentUser;
-    var url = Uri.parse('http://157.230.183.103/create-transaction/');
+    var url = Uri.parse('${Api.baseUrl}/create-transaction/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -317,7 +318,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
       body: SingleChildScrollView(
         child: Column(children: [
           CachedNetworkImage(
-            imageUrl: 'http://157.230.183.103${widget.doctor['image']}',
+            imageUrl: '${Api.baseUrl}${widget.doctor['image']}',
             imageBuilder: (context, imageProvider) => Container(
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
@@ -631,7 +632,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                   )
                                 : CachedNetworkImage(
                                     imageUrl:
-                                        'http://157.230.183.103${widget.doctor['review'][index]['client_profile']['image']}',
+                                        '${Api.baseUrl}${widget.doctor['review'][index]['client_profile']['image']}',
                                     imageBuilder: (context, imageProvider) =>
                                         CircleAvatar(
                                       backgroundImage: imageProvider,

@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class InboxDoctor extends StatefulWidget {
   final receiverID;
@@ -67,7 +68,7 @@ class _InboxDoctorState extends State<InboxDoctor> {
   // Fetch otp api **************************
   double rate = 1.0;
   void postData() async {
-    var url = Uri.parse('http://157.230.183.103/send-review/');
+    var url = Uri.parse('${Api.baseUrl}/send-review/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -323,7 +324,7 @@ class _InboxDoctorState extends State<InboxDoctor> {
 
     var response = await http.post(
       Uri.parse(
-        'http://157.230.183.103/send-messages/',
+        '${Api.baseUrl}/send-messages/',
       ),
       body: m,
     );

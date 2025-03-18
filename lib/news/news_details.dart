@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class NewsDetails extends StatefulWidget {
   final Map data;
@@ -25,7 +26,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   // Fetch otp api **************************
 
   void postData(postId, clientId) async {
-    var url = Uri.parse('http://157.230.183.103/likes/');
+    var url = Uri.parse('${Api.baseUrl}/likes/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -50,7 +51,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     // Check the status code of the response
     if (response.statusCode == 200) {
-      print(response.body);
+      //print(response.body);
       final data = context.read<ApiCalls>();
       data.fetcharticles();
     }
@@ -308,7 +309,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                     )
                                   : CachedNetworkImage(
                                       imageUrl:
-                                          'http://157.230.183.103${single.first['comments'][index]['client_profile']['image']}',
+                                          '${Api.baseUrl}${single.first['comments'][index]['client_profile']['image']}',
                                       imageBuilder: (context, imageProvider) =>
                                           CircleAvatar(
                                         backgroundImage: imageProvider,
@@ -448,7 +449,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     var response = await http.post(
       Uri.parse(
-        'http://157.230.183.103/create-comments/',
+        '${Api.baseUrl}/create-comments/',
       ),
       body: m,
     );

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class DoctorNewsDetails extends StatefulWidget {
   final Map data;
@@ -231,7 +232,7 @@ class _DoctorNewsDetailsState extends State<DoctorNewsDetails> {
                                     )
                                   : CachedNetworkImage(
                                       imageUrl:
-                                          'http://157.230.183.103${widget.data['comments'][index]['client_profile']['image']}',
+                                          '${Api.baseUrl}${widget.data['comments'][index]['client_profile']['image']}',
                                       imageBuilder: (context, imageProvider) =>
                                           CircleAvatar(
                                         backgroundImage: imageProvider,

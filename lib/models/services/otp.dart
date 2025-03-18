@@ -79,7 +79,7 @@ class _OtpPageState extends State<OtpPage> {
 
 // Fetch otp api **************************
   void postData() async {
-    var url = Uri.parse('${Api.baseUrl}login/');
+    var url = Uri.parse('${Api.baseUrl}/login/');
 
     // Defined headers
     Map<String, String> headers = {
@@ -111,7 +111,7 @@ class _OtpPageState extends State<OtpPage> {
       pref.setString('token', iyoo['token']);
 
       var newResponse = await http.post(
-        Uri.parse('${Api.baseUrl}details/'),
+        Uri.parse('${Api.baseUrl}/details/'),
         body: json.encode({'id': userId}),
         headers: headers,
       );

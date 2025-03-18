@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../doctor/doctor_image.dart';
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class DoctorsPage extends StatefulWidget {
   const DoctorsPage({super.key});
@@ -149,11 +150,11 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                               name:
                                                   'Dr ${doctors[index]['first_name']} ${doctors[index]['last_name']}',
                                               imageUrl:
-                                                  'http://157.230.183.103${doctors[index]['image']}')));
+                                                  '${Api.baseUrl}${doctors[index]['image']}')));
                                 },
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      'http://157.230.183.103${doctors[index]['image']}',
+                                      '${Api.baseUrl}${doctors[index]['image']}',
                                   imageBuilder: (context, imageProvider) =>
                                       CircleAvatar(
                                     radius: 25,

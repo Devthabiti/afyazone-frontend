@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:afya/client_nav.dart';
+import 'package:afya/models/services/utls.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../providers/token_provider.dart';
@@ -180,7 +179,7 @@ class _CompleteProfileState extends State<CompleteProfile>
 
     // PATCH request
     var response = await dio.patch(
-      'http://157.230.183.103/update-profile/',
+      '${Api.baseUrl}/update-profile/',
       data: iyoData,
     );
 

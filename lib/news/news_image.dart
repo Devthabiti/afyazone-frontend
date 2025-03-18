@@ -11,9 +11,15 @@ class NewsImageViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFFFFFF),
+        elevation: 1,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xff262626),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),

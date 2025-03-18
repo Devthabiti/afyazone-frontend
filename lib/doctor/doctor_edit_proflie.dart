@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 
 class EditDoctorProfile extends StatefulWidget {
   const EditDoctorProfile({super.key});
@@ -524,7 +525,7 @@ class _EditDoctorProfileState extends State<EditDoctorProfile> {
 
     // PATCH request
     var response = await dio.patch(
-      'http://157.230.183.103/update-doctor-profile/',
+      '${Api.baseUrl}/update-doctor-profile/',
       data: iyoData,
     );
 
@@ -727,7 +728,7 @@ class _EditDoctorProfileState extends State<EditDoctorProfile> {
                           myDialogy();
                         },
                         child: CachedNetworkImage(
-                            imageUrl: 'http://157.230.183.103${dr['image']}',
+                            imageUrl: '${Api.baseUrl}${dr['image']}',
                             imageBuilder: (context, imageProvider) =>
                                 CircleAvatar(
                                   radius: 50,

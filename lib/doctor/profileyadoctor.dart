@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import 'doctor_image.dart';
 
 class DoctorYaProfile extends StatefulWidget {
@@ -72,10 +73,10 @@ class _DoctorYaProfileState extends State<DoctorYaProfile> {
       //                       name:
       //                           'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}',
       //                       imageUrl:
-      //                           'http://157.230.183.103${widget.doctor['image']}')));
+      //                           '${Api.baseUrl}${widget.doctor['image']}')));
       //         },
       //         child: CachedNetworkImage(
-      //           imageUrl: 'http://157.230.183.103${widget.doctor['image']}',
+      //           imageUrl: '${Api.baseUrl}${widget.doctor['image']}',
       //           imageBuilder: (context, imageProvider) => CircleAvatar(
       //             radius: 25,
       //             backgroundImage: imageProvider,
@@ -95,7 +96,7 @@ class _DoctorYaProfileState extends State<DoctorYaProfile> {
       body: SingleChildScrollView(
         child: Column(children: [
           CachedNetworkImage(
-            imageUrl: 'http://157.230.183.103${widget.doctor['image']}',
+            imageUrl: '${Api.baseUrl}${widget.doctor['image']}',
             imageBuilder: (context, imageProvider) => Container(
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
@@ -394,7 +395,7 @@ class _DoctorYaProfileState extends State<DoctorYaProfile> {
                                   )
                                 : CachedNetworkImage(
                                     imageUrl:
-                                        'http://157.230.183.103${widget.doctor['review'][index]['client_profile']['image']}',
+                                        '${Api.baseUrl}${widget.doctor['review'][index]['client_profile']['image']}',
                                     imageBuilder: (context, imageProvider) =>
                                         CircleAvatar(
                                       backgroundImage: imageProvider,
