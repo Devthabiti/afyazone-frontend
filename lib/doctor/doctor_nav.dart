@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:afya/doctor/doctor_chat.dart';
 import 'package:afya/doctor/doctor_news.dart';
 import 'package:afya/doctor/home_doctor.dart';
@@ -9,10 +12,14 @@ import 'package:afya/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/providers/token_provider.dart';
+import '../models/services/utls.dart';
 import 'doctor_setting.dart';
 
 class DoctorNav extends StatefulWidget {
@@ -32,6 +39,7 @@ class _DoctorNavState extends State<DoctorNav> {
   void initState() {
     final data = context.read<ApiCalls>();
     // data.fetchUserDetails();
+
     data.fetchDoctor();
     data.fetchInbox();
     data.fetcharticles();
@@ -39,13 +47,56 @@ class _DoctorNavState extends State<DoctorNav> {
     data.fetchads();
     context.read<ApiCalls>().userID();
     pageController = PageController();
+    _startTimer();
     super.initState();
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     pageController.dispose();
     super.dispose();
+  }
+
+//Update Doctor Status
+// Fetch otp api **************************
+  void postData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
+    final uid = decodedToken['user_id'].toString();
+    print('my UID is $uid');
+    var url = Uri.parse('${Api.baseUrl}update_doctor_status/');
+    // print('my UID is $uid');
+
+    // Defined headers
+    Map<String, String> headers = {
+      //'Authorization': 'Basic bWF0aWt1OmJpcGFzMTIzNA==',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    // Defined request body
+    var body = {"user_id": uid, 'is_online': true};
+
+    // POST request
+    await http.post(
+      url,
+      headers: headers,
+      body: json.encode(body),
+      //encoding: Encoding.getByName('utf-8'),
+    );
+  }
+
+  // Function to start the timer
+  Timer? _timer;
+  void _startTimer() {
+    postData();
+    _timer = Timer.periodic(Duration(minutes: 4), (timer) {
+      setState(() {
+        postData();
+      });
+    });
   }
 
   onPageChanged(int pageIndex) {
@@ -63,6 +114,7 @@ class _DoctorNavState extends State<DoctorNav> {
   @override
   Widget build(BuildContext context) {
     var data = context.watch<ApiCalls>().allDoctors;
+    // print('******** SEND DOCTOR STATUS *********');
 
     return data.isEmpty //apa ntaweka & condition kufetch data zote
         ? Scaffold(
