@@ -5,6 +5,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:iconsax/iconsax.dart';
@@ -18,10 +19,14 @@ class InboxPage extends StatefulWidget {
   final receiverID;
   final senderID;
   final String doctorName;
+  final bool onlineStatus;
+  final String lastSeen;
   const InboxPage(
       {super.key,
       required this.senderID,
       required this.receiverID,
+      required this.onlineStatus,
+      required this.lastSeen,
       required this.doctorName});
 
   @override
@@ -164,6 +169,10 @@ class _InboxPageState extends State<InboxPage> {
     var uid = context.watch<ApiCalls>().currentUser;
     var messages = context.watch<ApiCalls>().mesage;
     DateFormat timeFormat = DateFormat('HH:mm');
+
+    var convertedTimestamp = DateTime.parse(widget.lastSeen)
+        .toLocal(); // Converting into [DateTime] object
+    var result = GetTimeAgo.parse(convertedTimestamp);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -186,27 +195,36 @@ class _InboxPageState extends State<InboxPage> {
                 SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.circle,
-                      color: Colors.green,
-                      size: 14,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        color: Color(0xff262626),
-                        fontSize: 14,
-                        // fontWeight: FontWeight.w500,
+                widget.onlineStatus
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 14,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Online',
+                            style: TextStyle(
+                              color: Color(0xff262626),
+                              fontSize: 14,
+                              // fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Text(
+                        'Last Seen $result',
+                        style: TextStyle(
+                          color: Color(0xff262626),
+                          fontSize: 12,
+                          // fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
               ],
             ),
             centerTitle: true,

@@ -12,6 +12,7 @@ import 'client_nav.dart';
 import 'doctor/doctor_complete_profile.dart';
 import 'doctor/doctor_nav.dart';
 import 'models/services/complete_prodile.dart';
+import 'models/services/utls.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
@@ -27,7 +28,7 @@ class _FirstPageState extends State<FirstPage> {
     var token = prefs.getString('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
     var userId = decodedToken['user_id'];
-    var url = Uri.parse('http://157.230.183.103/details/');
+    var url = Uri.parse('${Api.baseUrl}details/');
 
     // Defined headers
     Map<String, String> headers = {

@@ -89,6 +89,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
               builder: (context) => InboxPage(
                   senderID: uid,
                   receiverID: widget.doctor['user'].toString(),
+                  lastSeen: widget.doctor['last_seen'],
+                  onlineStatus: widget.doctor['is_online'],
                   doctorName:
                       'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}')),
           (route) => false);
@@ -277,6 +279,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               builder: (context) => InboxPage(
                                   senderID: uid,
                                   receiverID: widget.doctor['user'].toString(),
+                                  lastSeen: widget.doctor['last_seen'],
+                                  onlineStatus: widget.doctor['is_online'],
                                   doctorName:
                                       'Dr ${widget.doctor['first_name']} ${widget.doctor['last_name']}')));
                     },

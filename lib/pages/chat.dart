@@ -52,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     var inbox = context.read<ApiCalls>().myInbox;
+    print(inbox);
 
     return GestureDetector(
       onTap: () {
@@ -182,6 +183,12 @@ class _ChatPageState extends State<ChatPage> {
                                                   receiverID: inbox[index]
                                                           ['reciever_profile']
                                                       ['user'],
+                                                  lastSeen: inbox[index]
+                                                          ['reciever_profile']
+                                                      ['last_seen'],
+                                                  onlineStatus: inbox[index]
+                                                          ['reciever_profile']
+                                                      ['is_online'],
                                                   doctorName:
                                                       'Dr ${inbox[index]['reciever_profile']['first_name']} ${inbox[index]['reciever_profile']['last_name']}',
                                                 )));

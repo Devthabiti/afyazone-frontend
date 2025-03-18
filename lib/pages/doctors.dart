@@ -97,6 +97,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
   @override
   Widget build(BuildContext context) {
     // var doctors = context.watch<ApiCalls>().allDoctors;
+    print(doctors);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -178,28 +179,53 @@ class _DoctorsPageState extends State<DoctorsPage> {
                               trailing: Container(
                                   width: 70,
                                   //color: Colors.amber,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.online_prediction,
-                                        size: 20,
-                                        color: Colors.green,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        'Online',
-                                        style: TextStyle(
-                                          fontFamily: 'Manane',
-                                          color: const Color(0xff262626),
-                                          fontSize: 14,
-                                          // fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
+                                  child: doctors[index]['is_online']
+                                      ? Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.online_prediction,
+                                              size: 20,
+                                              color: Colors.green,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              'Online',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: const Color(0xff262626),
+                                                fontSize: 14,
+                                                // fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.online_prediction,
+                                              size: 20,
+                                              color: Colors.red,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              'Offline',
+                                              style: TextStyle(
+                                                fontFamily: 'Manane',
+                                                color: const Color(0xff262626),
+                                                fontSize: 14,
+                                                // fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        )),
                             ),
                             Container(
                               width: double.infinity,
