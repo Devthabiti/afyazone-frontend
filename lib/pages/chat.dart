@@ -39,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       final data = context.read<ApiCalls>();
       data.fetchInbox();
+      data.fetchDoctor();
     });
     super.initState();
   }

@@ -90,7 +90,10 @@ class _DoctorsPageState extends State<DoctorsPage> {
 
   @override
   void initState() {
+    final data = context.read<ApiCalls>();
+    data.fetchDoctor();
     doctors = context.read<ApiCalls>().allDoctors;
+
     super.initState();
   }
 
