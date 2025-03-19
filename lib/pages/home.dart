@@ -14,6 +14,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     final data = context.read<ApiCalls>();
-    //data.fetchMostViews();
     data.fetchUserDetails();
     data.fetchDoctor();
     data.fetcharticles();
@@ -103,6 +103,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var data = context.watch<ApiCalls>().clientData;
     var mostViews = context.watch<ApiCalls>().mostviews;
+    var random = context.watch<ApiCalls>().randomly;
+    //var mostLiked =
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
@@ -640,132 +642,161 @@ class _HomePageState extends State<HomePage> {
             height: 20,
             // child: Text('data'),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 20),
-                child: Text(
-                  'Just for you',
-                  style: TextStyle(
-                      fontFamily: 'Manane',
-                      fontSize: 16,
-                      color: Color(0xff262626),
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsPage()));
-                },
-                child: const Padding(
-                  padding: const EdgeInsets.only(right: 20.0, top: 20),
-                  child: Text(
-                    'View all',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff262626),
+          random.isEmpty
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 20),
+                      child: Text(
+                        'Just for you',
+                        style: TextStyle(
+                            fontFamily: 'Manane',
+                            fontSize: 16,
+                            color: Color(0xff262626),
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewsPage()));
+                      },
+                      child: const Padding(
+                        padding: const EdgeInsets.only(right: 20.0, top: 20),
+                        child: Text(
+                          'View all',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff262626),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
           SizedBox(
             height: 10,
             // child: Text('data'),
           ),
-          ListView.builder(
-            itemCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => Row(
-              children: [
-                CachedNetworkImage(
-                  imageUrl:
-                      '${Api.baseUrl}/images/articles/Front-Page-Stock-Image-Low-resolution-1-1.png',
-                  imageBuilder: (context, imageProvider) => Container(
-                    margin: EdgeInsets.all(15),
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(0xff0071e7),
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover)),
-                  ),
-                  placeholder: (context, url) => Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/logo.jpg'))),
-                  ),
-                ),
-                Container(
-                  // color: Colors.amber,
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
-                        style: TextStyle(
-                          fontFamily: 'Manane',
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff262626), // Color(0xff0071e7),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
+          random.isEmpty
+              ? Container()
+              : ListView.builder(
+                  itemCount: random.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var convertedTimestamp =
+                        DateTime.parse(random[index]['created_at'])
+                            .toLocal(); // Converting into [DateTime] object
+                    var result = GetTimeAgo.parse(convertedTimestamp);
+                    return GestureDetector(
+                      onTap: () {
+                        final data = context.read<ApiCalls>();
+                        data.fetchview(random[index]['id'].toString());
+                        data.fetcharticles();
+                        // print(mostViews[index]);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewsDetails(
+                                      data: random[index],
+                                    )));
+                      },
+                      child: Row(
                         children: [
-                          Icon(
-                            Icons.watch_later,
-                            size: 15,
-                            color: Color(0xff0071e7),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '1 hour ago ',
-                            style: TextStyle(
-                              fontFamily: 'Manane',
-                              fontSize: 10,
-
-                              color: Color(0xff262626), // Color(0xff0071e7),
+                          CachedNetworkImage(
+                            imageUrl: '${random[index]['image']}',
+                            imageBuilder: (context, imageProvider) => Container(
+                              margin: EdgeInsets.all(15),
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  // color: Color(0xff0071e7),
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover)),
+                            ),
+                            placeholder: (context, url) => Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('assets/logo.jpg'))),
                             ),
                           ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Icon(
-                            Icons.remove_red_eye,
-                            size: 15,
-                            color: Color(0xff0071e7),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '150 views',
-                            style: TextStyle(
-                              fontFamily: 'Manane',
-                              fontSize: 10,
+                          Container(
+                            // color: Colors.amber,
+                            width: MediaQuery.of(context).size.width * 0.65,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  // 'penzi la kichaa tajiri kwa binti'.toUpperCase(),
+                                  random[index]['title'].toUpperCase(),
+                                  style: TextStyle(
+                                    fontFamily: 'Manane',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Color(0xff262626), // Color(0xff0071e7),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.watch_later,
+                                      size: 15,
+                                      color: Color(0xff0071e7),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      result,
+                                      style: TextStyle(
+                                        fontFamily: 'Manane',
+                                        fontSize: 10,
 
-                              color: Color(0xff262626), // Color(0xff0071e7),
+                                        color: Color(
+                                            0xff262626), // Color(0xff0071e7),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(
+                                      Icons.remove_red_eye,
+                                      size: 15,
+                                      color: Color(0xff0071e7),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      '${NumberFormat.compact().format(random[index]['views'])} views',
+                                      //'${random[index]['views']} views',
+                                      style: TextStyle(
+                                        fontFamily: 'Manane',
+                                        fontSize: 10,
+
+                                        color: Color(
+                                            0xff262626), // Color(0xff0071e7),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          ),
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+                      ),
+                    );
+                  }),
 
           // ************ HOT ARTICLES *************
           SizedBox(

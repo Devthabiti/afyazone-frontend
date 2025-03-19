@@ -65,6 +65,22 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+//Provider ya kufetch to most like Articles with random concept
+  var randomly = [];
+  fetchRandom() async {
+    randomly = await getrandom();
+
+    notifyListeners();
+  }
+
+  //Provider ya kufetch to most like Articles
+  var mostliked = [];
+  fetchMostLiked() async {
+    mostviews = await getmostliked();
+
+    notifyListeners();
+  }
+
   //Provider ya kufetch ads
   var matangazo = [];
   fetchads() async {

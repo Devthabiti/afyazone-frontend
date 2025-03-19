@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -248,12 +249,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                                         padding:
                                             const EdgeInsets.only(right: 0),
                                         child: Text(
-                                          style: TextStyle(
-                                            color: Color(0xff262626),
-                                            fontSize: 14,
-                                          ),
-                                          likeData['likes'].toString(),
-                                        ),
+                                            style: TextStyle(
+                                              color: Color(0xff262626),
+                                              fontSize: 14,
+                                            ),
+                                            NumberFormat.compact()
+                                                .format(likeData['likes'])
+                                            // likeData['likes'].toString(),
+                                            ),
                                       )
                                     ],
                                   ),
@@ -266,14 +269,16 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 3),
                                         child: Text(
-                                          style: TextStyle(
-                                            color: Color(0xff262626),
-                                            fontSize: 14,
-                                          ),
-                                          likeData['comments']
-                                              .length
-                                              .toString(),
-                                        ),
+                                            style: TextStyle(
+                                              color: Color(0xff262626),
+                                              fontSize: 14,
+                                            ),
+                                            NumberFormat.compact().format(
+                                                likeData['comments'].length)
+                                            // likeData['comments']
+                                            //     .length
+                                            //     .toString(),
+                                            ),
                                       )
                                     ],
                                   ),
@@ -286,12 +291,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 3),
                                         child: Text(
-                                          style: TextStyle(
-                                            color: Color(0xff262626),
-                                            fontSize: 14,
-                                          ),
-                                          likeData['views'].toString(),
-                                        ),
+                                            style: TextStyle(
+                                              color: Color(0xff262626),
+                                              fontSize: 14,
+                                            ),
+                                            NumberFormat.compact()
+                                                .format(likeData['views'])
+                                            // likeData['views'].toString(),
+                                            ),
                                       )
                                     ],
                                   ),
