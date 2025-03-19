@@ -100,7 +100,8 @@ getnews() async {
     Uri.parse('${Api.baseUrl}/show-article/'),
   );
   if (response.statusCode == 200) {
-    List iyoo = json.decode(utf8.decode(response.bodyBytes));
+    Map data = json.decode(utf8.decode(response.bodyBytes));
+    List iyoo = data['results'];
     return iyoo;
   } else {
     return null;
