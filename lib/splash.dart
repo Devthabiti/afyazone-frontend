@@ -2,8 +2,10 @@ import 'package:afya/models/services/login.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import 'first_page.dart';
+import 'models/providers/token_provider.dart';
 
 class SplashPage extends StatefulWidget {
   final String? token;
@@ -23,6 +25,19 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     super.initState();
+
+    //fetch all api before run anything
+    final data = context.read<ApiCalls>();
+    data.fetchMostViews();
+    // data.fetchUserDetails();
+    // data.fetchDoctor();
+    // data.fetchInbox();
+    // data.fetcharticles();
+    // data.fetchtransaction();
+    // //data.fetchads();
+
+    // context.read<ApiCalls>().userID();
+
     _controller = AnimationController(
       duration: Duration(milliseconds: _text.length * 200), // Adjust speed here
       vsync: this,

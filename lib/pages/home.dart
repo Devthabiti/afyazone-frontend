@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     final data = context.read<ApiCalls>();
+    //data.fetchMostViews();
     data.fetchUserDetails();
     data.fetchDoctor();
     data.fetcharticles();
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var data = context.watch<ApiCalls>().clientData;
+    var mostViews = context.watch<ApiCalls>().mostviews;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
@@ -227,7 +229,7 @@ class _HomePageState extends State<HomePage> {
               : ListView.builder(
                   itemCount: doctors.length,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     double totalRating = 0.0;
                     double average = 0.0;
@@ -280,6 +282,7 @@ class _HomePageState extends State<HomePage> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(7),
+                                            color: Colors.blue,
                                             image: DecorationImage(
                                                 image: imageProvider,
                                                 fit: BoxFit.cover)),
@@ -475,50 +478,48 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
           Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 20),
-                child: Text(
-                  'Popular',
-                  style: TextStyle(
-                      fontFamily: 'Manane',
-                      fontSize: 16,
-                      color: Color(0xff262626),
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsPage()));
-                },
-                child: const Padding(
-                  padding: const EdgeInsets.only(right: 20.0, top: 20),
-                  child: Text(
-                    'View all',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff262626),
+          mostViews.isEmpty
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 20),
+                      child: Text(
+                        'Popular',
+                        style: TextStyle(
+                            fontFamily: 'Manane',
+                            fontSize: 16,
+                            color: Color(0xff262626),
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewsPage()));
+                      },
+                      child: const Padding(
+                        padding: const EdgeInsets.only(right: 20.0, top: 20),
+                        child: Text(
+                          'View all',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff262626),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          hot.isEmpty
-              ? Center(
-                  child: Lottie.asset(
-                    'assets/loader.json',
-                    width: 100,
-                    height: 100,
-                  ),
-                )
+          mostViews.isEmpty
+              ? Container()
               : SizedBox(
                   height: 250,
                   child: ListView.builder(
-                    itemCount: hot.length,
+                    itemCount: mostViews.length,
                     itemBuilder: (context, index) => Container(
                       margin: EdgeInsets.all(15),
                       width: 320,
@@ -526,92 +527,108 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(7),
                         color: Color(0xff0071e7),
                       ),
-                      child: Column(
-                        children: [
-                          CachedNetworkImage(
-                              imageUrl: '${hot[index]['image']}',
+                      child: GestureDetector(
+                        onTap: () {
+                          final data = context.read<ApiCalls>();
+                          data.fetchview(mostViews[index]['id'].toString());
+                          data.fetcharticles();
+                          // print(mostViews[index]);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsDetails(
+                                        data: mostViews[index],
+                                      )));
+                        },
+                        child: Column(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: '${mostViews[index]['image']}',
                               imageBuilder: (context, imageProvider) =>
                                   Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(7),
-                                          topRight: Radius.circular(7)),
-                                    ),
-                                    height: 170,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                            left: 20,
-                                            top: 10,
-                                            height: 30,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors
-                                                      .white, //Color(0xff0071e7).withOpacity(0.7),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              child: Center(
-                                                  child: Row(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(7),
+                                      topRight: Radius.circular(7)),
+                                ),
+                                height: 170,
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                        left: 20,
+                                        top: 10,
+                                        height: 30,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors
+                                                  .white, //Color(0xff0071e7).withOpacity(0.7),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Center(
+                                              child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
                                                         horizontal: 5),
-                                                    child: Icon(
-                                                      Icons.remove_red_eye,
-                                                      color: Color(0xff0071e7),
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 5.0),
-                                                    child: Text(
-                                                      "${NumberFormat.compact().format(hot[index]['views'])} Views",
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xff262626),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )),
-                                            )),
-                                        Positioned(
-                                            right: 10,
-                                            top: 10,
-                                            height: 30,
-                                            child: Container(
-                                                child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xfffe0002),
-                                              child: Icon(
-                                                Icons.local_fire_department,
-                                                size: 22,
-                                                color: Colors.white,
+                                                child: Icon(
+                                                  Icons.remove_red_eye,
+                                                  color: Color(0xff0071e7),
+                                                  size: 20,
+                                                ),
                                               ),
-                                            ))),
-                                      ],
-                                    ),
-                                  )),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Center(
-                            child: Text(
-                              //overflow: TextOverflow.ellipsis,
-
-                              hot[index]['title'].toUpperCase(),
-                              textAlign: TextAlign.center,
-
-                              style: TextStyle(color: Colors.white),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 5.0),
+                                                child: Text(
+                                                  "${NumberFormat.compact().format(mostViews[index]['views'])} Views",
+                                                  style: TextStyle(
+                                                    color: Color(0xff262626),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                        )),
+                                    Positioned(
+                                        right: 10,
+                                        top: 10,
+                                        height: 30,
+                                        child: Container(
+                                            child: CircleAvatar(
+                                          backgroundColor: Color(0xfffe0002),
+                                          child: Icon(
+                                            Icons.local_fire_department,
+                                            size: 22,
+                                            color: Colors.white,
+                                          ),
+                                        ))),
+                                  ],
+                                ),
+                              ),
+                              placeholder: (context, url) => Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('assets/logo.jpg'))),
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Center(
+                              child: Text(
+                                //overflow: TextOverflow.ellipsis,
+
+                                mostViews[index]['title'].toUpperCase(),
+                                textAlign: TextAlign.center,
+
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     // physics: NeverScrollableScrollPhysics(),
@@ -674,7 +691,7 @@ class _HomePageState extends State<HomePage> {
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.amber,
+                        color: Color(0xff0071e7),
                         image: DecorationImage(
                             image: imageProvider, fit: BoxFit.cover)),
                   ),

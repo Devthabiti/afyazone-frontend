@@ -51,17 +51,36 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     // Check the status code of the response
     if (response.statusCode == 200) {
-      //print(response.body);
       final data = context.read<ApiCalls>();
       data.fetcharticles();
+      getDetails();
     }
   }
 
   @override
   void initState() {
+    getDetails();
     final data = context.read<ApiCalls>();
     data.fetcharticles();
     super.initState();
+  }
+
+  //fetching Most 10 articles with views
+  Map likeData = {};
+  List likes = [];
+  getDetails() async {
+    var uid = context.read<ApiCalls>().currentUser;
+    var response = await http.get(
+      Uri.parse('${Api.baseUrl}/show-article-details/${widget.data['id']}/'),
+    );
+    if (response.statusCode == 200) {
+      likeData = json.decode(utf8.decode(response.bodyBytes));
+      if (likeData.isNotEmpty) {
+        List lk = likeData['postlikes'];
+        likes =
+            lk.where((element) => element['client'] == int.parse(uid)).toList();
+      }
+    }
   }
 
   @override
@@ -76,10 +95,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     List single = articles
         .where((element) => element['id'] == widget.data['id'])
         .toList();
-    // print(single.first);
-    List lk = single.first['postlikes'];
-    List likes =
-        lk.where((element) => element['client'] == int.parse(uid)).toList();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -138,7 +154,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       physics: NeverScrollableScrollPhysics(),
                       children: [
                         CachedNetworkImage(
-                          imageUrl: '${single.first['image']}',
+                          imageUrl: '${widget.data['image']}',
                           imageBuilder: (context, imageProvider) => Container(
                             child: Image(image: imageProvider),
                             // decoration: BoxDecoration(
@@ -155,7 +171,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                           padding: const EdgeInsets.only(
                               left: 5, right: 5, bottom: 5, top: 15),
                           child: Text(
-                            single.first['title'].toUpperCase(),
+                            widget.data['title'].toUpperCase(),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -171,7 +187,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                             bottom: 10,
                           ),
                           child: Text(
-                            single.first['content'],
+                            widget.data['content'],
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w200,
@@ -182,97 +198,111 @@ class _NewsDetailsState extends State<NewsDetails> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Row(
-                              children: [
-                                likes.isNotEmpty
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          postData(single.first['id'], uid);
-                                        },
-                                        child: Container(
-                                          height: 50,
-                                          width: 40,
-                                          //color: Colors.amber,
-                                          child: Lottie.asset(
-                                              'assets/heart.json',
-                                              repeat: false,
-                                              fit: BoxFit.cover),
+                        likeData.isEmpty
+                            ? Center(
+                                child: Lottie.asset(
+                                'assets/loader.json',
+                                width: 70,
+                                height: 70,
+                              ))
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      likes.isNotEmpty
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                postData(
+                                                    widget.data['id'], uid);
+                                              },
+                                              child: Container(
+                                                height: 50,
+                                                width: 40,
+                                                //color: Colors.amber,
+                                                child: Lottie.asset(
+                                                    'assets/heart.json',
+                                                    repeat: false,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                postData(
+                                                    widget.data['id'], uid);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 5),
+                                                height: 50,
+                                                width: 40,
+                                                // color: Colors.amber,
+                                                child: Icon(
+                                                  Iconsax.heart,
+                                                  color: Color(0xff262626),
+                                                ),
+                                              ),
+                                            ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 0),
+                                        child: Text(
+                                          style: TextStyle(
+                                            color: Color(0xff262626),
+                                            fontSize: 14,
+                                          ),
+                                          likeData['likes'].toString(),
                                         ),
                                       )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          postData(single.first['id'], uid);
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.only(left: 5),
-                                          height: 50,
-                                          width: 40,
-                                          // color: Colors.amber,
-                                          child: Icon(
-                                            Iconsax.heart,
-                                            color: Color(0xff262626),
-                                          ),
-                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Iconsax.messages_24,
+                                        color: Color(0xff262626),
                                       ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 0),
-                                  child: Text(
-                                    style: TextStyle(
-                                      color: Color(0xff262626),
-                                      fontSize: 14,
-                                    ),
-                                    single.first['likes'].toString(),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 3),
+                                        child: Text(
+                                          style: TextStyle(
+                                            color: Color(0xff262626),
+                                            fontSize: 14,
+                                          ),
+                                          likeData['comments']
+                                              .length
+                                              .toString(),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Iconsax.messages_24,
-                                  color: Color(0xff262626),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3),
-                                  child: Text(
-                                    style: TextStyle(
-                                      color: Color(0xff262626),
-                                      fontSize: 14,
-                                    ),
-                                    single.first['comments'].length.toString(),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Iconsax.eye,
+                                        color: Color(0xff262626),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 3),
+                                        child: Text(
+                                          style: TextStyle(
+                                            color: Color(0xff262626),
+                                            fontSize: 14,
+                                          ),
+                                          likeData['views'].toString(),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Iconsax.eye,
-                                  color: Color(0xff262626),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3),
-                                  child: Text(
-                                    style: TextStyle(
-                                      color: Color(0xff262626),
-                                      fontSize: 14,
-                                    ),
-                                    single.first['views'].toString(),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                                ],
+                              ),
                         Divider(
                           thickness: 1,
                         ),
                       ]),
                   //hapa list view nyingine
-                  single.first['comments'].isEmpty
+                  likeData.isEmpty || likeData['comments'].isEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Center(
@@ -287,19 +317,19 @@ class _NewsDetailsState extends State<NewsDetails> {
                       : ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: single.first['comments'].length,
+                          itemCount: likeData['comments'].length,
                           itemBuilder: (context, index) {
                             var timestamp =
-                                single.first['comments'][index]['created_at'];
+                                likeData['comments'][index]['created_at'];
                             var convertedTimestamp =
                                 DateTime.parse(timestamp).toLocal();
                             var result = GetTimeAgo.parse(convertedTimestamp);
                             return ListTile(
-                              leading: single.first['comments'][index]
+                              leading: likeData['comments'][index]
                                           ['client_profile']['image'] ==
                                       null
                                   ? CircleAvatar(
-                                      backgroundImage: single.first['comments']
+                                      backgroundImage: likeData['comments']
                                                       [index]['client_profile']
                                                   ['gender'] ==
                                               "Male"
@@ -309,7 +339,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                     )
                                   : CachedNetworkImage(
                                       imageUrl:
-                                          '${Api.baseUrl}${single.first['comments'][index]['client_profile']['image']}',
+                                          '${Api.baseUrl}${likeData['comments'][index]['client_profile']['image']}',
                                       imageBuilder: (context, imageProvider) =>
                                           CircleAvatar(
                                         backgroundImage: imageProvider,
@@ -325,7 +355,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Text(
-                                      single.first['comments'][index]
+                                      likeData['comments'][index]
                                           ['client_profile']['username'],
                                       style: TextStyle(
                                         fontSize: 15,
@@ -344,7 +374,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                 ],
                               ),
                               subtitle: Text(
-                                single.first['comments'][index]['content'],
+                                likeData['comments'][index]['content'],
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Manane',
@@ -456,11 +486,9 @@ class _NewsDetailsState extends State<NewsDetails> {
 
     // print(response.statusCode);
     if (response.statusCode == 201) {
-      // List iyoo = json.decode(response.body);
-
       final data = context.read<ApiCalls>();
       data.fetcharticles();
-      Navigator.pop(context);
+      getDetails();
     } else {
       Navigator.pop(context);
     }

@@ -108,6 +108,19 @@ getnews() async {
   }
 }
 
+//fetching Most 10 articles with views
+getmostviews() async {
+  var response = await http.get(
+    Uri.parse('${Api.baseUrl}/most-viewed/'),
+  );
+  if (response.statusCode == 200) {
+    List iyoo = json.decode(utf8.decode(response.bodyBytes));
+    return iyoo;
+  } else {
+    return null;
+  }
+}
+
 //fetching articles and story
 gettransaction() async {
   var response = await http.get(
