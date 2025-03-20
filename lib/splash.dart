@@ -35,6 +35,7 @@ class _SplashPageState extends State<SplashPage>
     data.fetchads();
     data.fetchPhamacy();
     data.fetchMagonjwa();
+    data.fetchStory();
     // data.fetchUserDetails();
     // data.fetchDoctor();
     // data.fetchInbox();

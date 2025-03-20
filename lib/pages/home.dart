@@ -108,13 +108,12 @@ class _HomePageState extends State<HomePage> {
     var hot = context.watch<ApiCalls>().hotarticle;
     var magonjwa = context.watch<ApiCalls>().magonjwa;
     var phamacy = context.watch<ApiCalls>().phamacy;
+    var story = context.watch<ApiCalls>().story;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
     //list all caterogies
-    List storys =
-        articles.where((element) => element['category'] == 'story').toList();
-    List story = storys.take(10).toList();
+
     List foods =
         articles.where((element) => element['label'] == 'chakula').toList();
     List food = foods.take(10).toList();
@@ -1264,10 +1263,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Magonjwa()));
-                },
+                onTap: magonjwa.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Magonjwa()));
+                      },
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
@@ -1376,7 +1379,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  'Love & Sex',
+                  'Story za Moto 🔥',
                   style: TextStyle(
                       fontFamily: 'Manane',
                       fontSize: 16,
@@ -1385,10 +1388,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Story()));
-                },
+                onTap: story.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Story()));
+                      },
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
@@ -1402,102 +1407,112 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Container(
-              height: 200,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: story.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return CachedNetworkImage(
-                      imageUrl: '${story[index]['image']}',
-                      imageBuilder: (context, imageProvider) => Container(
-                          width: 280,
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(top: 20, left: 15),
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.6),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Text(
-                                  story[index]['title'].toUpperCase(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
+          story.isEmpty
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
+              : SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: story.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return CachedNetworkImage(
+                          imageUrl: '${story[index]['image']}',
+                          imageBuilder: (context, imageProvider) => Container(
+                              width: 280,
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(7),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 10, right: 5),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        final data = context.read<ApiCalls>();
-                                        data.fetchview(
-                                            story[index]['id'].toString());
-                                        data.fetcharticles();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NewsDetails(
-                                                      data: story[index],
-                                                    )));
-                                      },
-                                      child: Container(
-                                          width: 100,
-                                          padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                              color: Color(0xff0071e7),
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: Center(
-                                              child: Text(
-                                            'Read now',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            ),
-                                          ))),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 20, left: 15),
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.6),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: Text(
+                                      story[index]['title'].toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 10, right: 5),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            final data =
+                                                context.read<ApiCalls>();
+                                            data.fetchview(
+                                                story[index]['id'].toString());
+
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NewsDetails(
+                                                          data: story[index],
+                                                        )));
+                                          },
+                                          child: Container(
+                                              width: 100,
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff0071e7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: Text(
+                                                'Read now',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
+                                              ))),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                              ),
-                            ],
-                          )));
-                },
-              )
+                              )));
+                    },
+                  )
 
-              //  ListView(
-              //   // physics: NeverScrollableScrollPhysics(),
-              //   shrinkWrap: true,
-              //   scrollDirection: Axis.horizontal,
-              //   children: [
-              //     SizedBox(
-              //       width: 15.0,
-              //     ),
+                  //  ListView(
+                  //   // physics: NeverScrollableScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   scrollDirection: Axis.horizontal,
+                  //   children: [
+                  //     SizedBox(
+                  //       width: 15.0,
+                  //     ),
 
-              //     SizedBox(
-              //       width: 15.0,
-              //     ),
-              //   ],
-              // ),
-              ),
+                  //     SizedBox(
+                  //       width: 15.0,
+                  //     ),
+                  //   ],
+                  // ),
+                  ),
           // ************ MATUNDA NA CHAKULA *************
           SizedBox(
             height: 20,

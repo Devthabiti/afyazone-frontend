@@ -57,6 +57,14 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Provider ya kufetch stories and articles
+  var story = [];
+  fetchStory() async {
+    story = await getstory();
+
+    notifyListeners();
+  }
+
 //Provider ya kufetch to 10 Articles with views
   var mostviews = [];
   fetchMostViews() async {

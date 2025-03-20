@@ -108,6 +108,20 @@ getnews() async {
   }
 }
 
+//fetching articles and story
+getstory() async {
+  var response = await http.get(
+    Uri.parse('${Api.baseUrl}/story-time/'),
+  );
+  if (response.statusCode == 200) {
+    Map data = json.decode(utf8.decode(response.bodyBytes));
+    List iyoo = data['results'];
+    return iyoo;
+  } else {
+    return null;
+  }
+}
+
 //fetching Most 10 articles with views
 getmostviews() async {
   var response = await http.get(

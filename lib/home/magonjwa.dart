@@ -122,9 +122,7 @@ class _MagonjwaState extends State<Magonjwa> {
   @override
   Widget build(BuildContext context) {
     var uid = context.watch<ApiCalls>().currentUser;
-    var articles = context.watch<ApiCalls>().articles;
-    List magonjwa =
-        articles.where((element) => element['label'] == 'magonjwa').toList();
+    List magonjwa = context.watch<ApiCalls>().magonjwa;
 
     return Scaffold(
         appBar: AppBar(
