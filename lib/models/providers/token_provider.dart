@@ -97,6 +97,14 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Provider ya kufetch phamacy images
+  var phamacy = [];
+  fetchPhamacy() async {
+    phamacy = await getphamacy();
+
+    notifyListeners();
+  }
+
   //Provider ya kufetch stories and articles
   var transactions = [];
   fetchtransaction() async {

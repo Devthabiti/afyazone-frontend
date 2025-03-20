@@ -198,3 +198,17 @@ getads() async {
     return null;
   }
 }
+
+//fetching all phamacy iamges
+getphamacy() async {
+  var response = await http.get(
+    Uri.parse('${Api.baseUrl}/phamacy/'),
+  );
+  if (response.statusCode == 200) {
+    List iyoo = json.decode(response.body);
+
+    return iyoo;
+  } else {
+    return null;
+  }
+}

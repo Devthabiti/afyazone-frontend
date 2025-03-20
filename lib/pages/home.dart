@@ -106,6 +106,7 @@ class _HomePageState extends State<HomePage> {
     var random = context.watch<ApiCalls>().randomly;
     var mostLiked = context.watch<ApiCalls>().mostliked;
     var hot = context.watch<ApiCalls>().hotarticle;
+    var phamacy = context.watch<ApiCalls>().phamacy;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
@@ -1195,44 +1196,62 @@ class _HomePageState extends State<HomePage> {
                   )),
             ],
           ),
-          SizedBox(
-            height: 160,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.only(left: 5, right: 15),
-                  width: 300,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      image: DecorationImage(
-                          image: AssetImage('assets/da3.jpg'),
-                          fit: BoxFit.cover)),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff0071e7).withOpacity(0.25),
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30, left: 20),
-                      child: Text(
-                        'Available Soon 🔥',
-                        style: TextStyle(
-                            fontFamily: 'Manane',
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+
+          phamacy.isEmpty
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
+              : SizedBox(
+                  height: 160,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: phamacy.length,
+                    itemBuilder: (context, index) => CachedNetworkImage(
+                      imageUrl: '${phamacy[index]['image']}',
+                      imageBuilder: (context, imageProvider) => Container(
+                          width: 300,
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xff0071e7).withOpacity(0.25),
+                              borderRadius: BorderRadius.circular(7),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 30, left: 20),
+                              child: Text(
+                                phamacy[index]['promo_text'],
+                                style: TextStyle(
+                                    fontFamily: 'Manane',
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                      placeholder: (context, url) => Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/logo.jpg'))),
                       ),
                     ),
-                  )),
-            ),
-          ),
+                  ),
+                ),
           // ************ MAJONGWA *************
           SizedBox(
             height: 20,
             // child: Text('data'),
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
