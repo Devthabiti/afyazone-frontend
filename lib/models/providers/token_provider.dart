@@ -89,6 +89,14 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Provider ya kufetch hot Articles
+  var magonjwa = [];
+  fetchMagonjwa() async {
+    magonjwa = await getmagonjwa();
+
+    notifyListeners();
+  }
+
   //Provider ya kufetch ads
   var matangazo = [];
   fetchads() async {

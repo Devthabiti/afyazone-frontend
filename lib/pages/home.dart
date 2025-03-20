@@ -106,15 +106,12 @@ class _HomePageState extends State<HomePage> {
     var random = context.watch<ApiCalls>().randomly;
     var mostLiked = context.watch<ApiCalls>().mostliked;
     var hot = context.watch<ApiCalls>().hotarticle;
+    var magonjwa = context.watch<ApiCalls>().magonjwa;
     var phamacy = context.watch<ApiCalls>().phamacy;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
     //list all caterogies
-    List magonjwas =
-        articles.where((element) => element['label'] == 'magonjwa').toList();
-
-    List magonjwa = magonjwas.take(10).toList();
     List storys =
         articles.where((element) => element['category'] == 'story').toList();
     List story = storys.take(10).toList();
@@ -540,7 +537,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           final data = context.read<ApiCalls>();
                           data.fetchview(mostViews[index]['id'].toString());
-                          data.fetcharticles();
+
                           // print(mostViews[index]);
                           Navigator.push(
                               context,
@@ -710,7 +707,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         final data = context.read<ApiCalls>();
                         data.fetchview(random[index]['id'].toString());
-                        data.fetcharticles();
+
                         // print(mostViews[index]);
                         Navigator.push(
                             context,
@@ -876,7 +873,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           final data = context.read<ApiCalls>();
                           data.fetchview(mostLiked[index]['id'].toString());
-                          data.fetcharticles();
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1035,7 +1032,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           final data = context.read<ApiCalls>();
                           data.fetchview(hot[index]['id'].toString());
-                          data.fetcharticles();
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -1306,7 +1303,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         final data = context.read<ApiCalls>();
                         data.fetchview(magonjwa[index]['id'].toString());
-                        data.fetcharticles();
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
