@@ -53,7 +53,8 @@ class _NewsDetailsState extends State<NewsDetails> {
     // Check the status code of the response
     if (response.statusCode == 200) {
       final data = context.read<ApiCalls>();
-      data.fetcharticles();
+      data.fetchMostViews();
+      data.fetchMostLiked();
       getDetails();
     }
   }
@@ -90,12 +91,6 @@ class _NewsDetailsState extends State<NewsDetails> {
     var convertedTimestamp = DateTime.parse(timestamp).toLocal();
     var result = GetTimeAgo.parse(convertedTimestamp);
     var uid = context.watch<ApiCalls>().currentUser;
-
-    //filter likes
-    var articles = context.watch<ApiCalls>().articles;
-    List single = articles
-        .where((element) => element['id'] == widget.data['id'])
-        .toList();
 
     return GestureDetector(
       onTap: () {
@@ -494,7 +489,8 @@ class _NewsDetailsState extends State<NewsDetails> {
     // print(response.statusCode);
     if (response.statusCode == 201) {
       final data = context.read<ApiCalls>();
-      data.fetcharticles();
+      data.fetchMostViews();
+      data.fetchMostLiked();
       getDetails();
     } else {
       Navigator.pop(context);

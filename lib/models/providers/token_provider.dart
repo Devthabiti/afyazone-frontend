@@ -76,7 +76,7 @@ class ApiCalls extends ChangeNotifier {
   //Provider ya kufetch to most like Articles
   var mostliked = [];
   fetchMostLiked() async {
-    mostviews = await getmostliked();
+    mostliked = await getmostliked();
 
     notifyListeners();
   }

@@ -30,6 +30,7 @@ class _SplashPageState extends State<SplashPage>
     final data = context.read<ApiCalls>();
     data.fetchMostViews();
     data.fetchRandom();
+    data.fetchMostLiked();
     // data.fetchUserDetails();
     // data.fetchDoctor();
     // data.fetchInbox();

@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
     var data = context.watch<ApiCalls>().clientData;
     var mostViews = context.watch<ApiCalls>().mostviews;
     var random = context.watch<ApiCalls>().randomly;
-    //var mostLiked =
+    var mostLiked = context.watch<ApiCalls>().mostliked;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
@@ -480,44 +480,50 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
           Divider(),
-          mostViews.isEmpty
-              ? Container()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 20),
-                      child: Text(
-                        'Popular',
-                        style: TextStyle(
-                            fontFamily: 'Manane',
-                            fontSize: 16,
-                            color: Color(0xff262626),
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: Text(
+                  'Popular',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      fontSize: 16,
+                      color: Color(0xff262626),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              GestureDetector(
+                onTap: mostViews.isEmpty
+                    ? null
+                    : () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => NewsPage()));
                       },
-                      child: const Padding(
-                        padding: const EdgeInsets.only(right: 20.0, top: 20),
-                        child: Text(
-                          'View all',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff262626),
-                          ),
-                        ),
-                      ),
+                child: const Padding(
+                  padding: const EdgeInsets.only(right: 20.0, top: 20),
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff262626),
                     ),
-                  ],
+                  ),
                 ),
+              ),
+            ],
+          ),
           mostViews.isEmpty
-              ? Container()
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
               : SizedBox(
                   height: 250,
                   child: ListView.builder(
@@ -642,48 +648,54 @@ class _HomePageState extends State<HomePage> {
             height: 20,
             // child: Text('data'),
           ),
-          random.isEmpty
-              ? Container()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 20),
-                      child: Text(
-                        'Just for you',
-                        style: TextStyle(
-                            fontFamily: 'Manane',
-                            fontSize: 16,
-                            color: Color(0xff262626),
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 20),
+                child: Text(
+                  'Just for you',
+                  style: TextStyle(
+                      fontFamily: 'Manane',
+                      fontSize: 16,
+                      color: Color(0xff262626),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              GestureDetector(
+                onTap: random.isEmpty
+                    ? null
+                    : () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => NewsPage()));
                       },
-                      child: const Padding(
-                        padding: const EdgeInsets.only(right: 20.0, top: 20),
-                        child: Text(
-                          'View all',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff262626),
-                          ),
-                        ),
-                      ),
+                child: const Padding(
+                  padding: const EdgeInsets.only(right: 20.0, top: 20),
+                  child: Text(
+                    'View all',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff262626),
                     ),
-                  ],
+                  ),
                 ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 10,
             // child: Text('data'),
           ),
           random.isEmpty
-              ? Container()
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
               : ListView.builder(
                   itemCount: random.length,
                   shrinkWrap: true,
@@ -818,10 +830,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsPage()));
-                },
+                onTap: mostLiked.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewsPage()));
+                      },
                 child: const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
@@ -835,7 +851,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          hot.isEmpty
+          mostLiked.isEmpty
               ? Center(
                   child: Lottie.asset(
                     'assets/loader.json',
@@ -852,23 +868,23 @@ class _HomePageState extends State<HomePage> {
                       mainAxisSpacing: 15.0, // Space between rows
                       childAspectRatio: 0.7),
                   padding: EdgeInsets.all(8.0),
-                  itemCount: hot.length, // Number of items
+                  itemCount: mostLiked.length, // Number of items
                   itemBuilder: (context, index) {
                     return Card(
                       child: GestureDetector(
                         onTap: () {
                           final data = context.read<ApiCalls>();
-                          data.fetchview(hot[index]['id'].toString());
+                          data.fetchview(mostLiked[index]['id'].toString());
                           data.fetcharticles();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => NewsDetails(
-                                        data: hot[index],
+                                        data: mostLiked[index],
                                       )));
                         },
                         child: CachedNetworkImage(
-                          imageUrl: '${hot[index]['image']}',
+                          imageUrl: '${mostLiked[index]['image']}',
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -902,7 +918,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        hot[index]['title'].toUpperCase(),
+                                        mostLiked[index]['title'].toUpperCase(),
                                         textAlign: TextAlign.center,
                                         //overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -939,7 +955,8 @@ class _HomePageState extends State<HomePage> {
                                             padding: const EdgeInsets.only(
                                                 right: 5.0),
                                             child: Text(
-                                              "${NumberFormat.compact().format(hot[index]['views'])}",
+                                              NumberFormat.compact().format(
+                                                  mostLiked[index]['likes']),
                                               style: TextStyle(
                                                 color: Color(0xff262626),
                                               ),
