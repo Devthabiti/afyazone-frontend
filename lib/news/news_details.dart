@@ -55,6 +55,7 @@ class _NewsDetailsState extends State<NewsDetails> {
       final data = context.read<ApiCalls>();
       data.fetchMostViews();
       data.fetchMostLiked();
+      data.fetchHotArticles();
       getDetails();
     }
   }
@@ -491,6 +492,7 @@ class _NewsDetailsState extends State<NewsDetails> {
       final data = context.read<ApiCalls>();
       data.fetchMostViews();
       data.fetchMostLiked();
+      data.fetchHotArticles();
       getDetails();
     } else {
       Navigator.pop(context);

@@ -81,6 +81,14 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Provider ya kufetch hot Articles
+  var hotarticle = [];
+  fetchHotArticles() async {
+    hotarticle = await gethotarticle();
+
+    notifyListeners();
+  }
+
   //Provider ya kufetch ads
   var matangazo = [];
   fetchads() async {

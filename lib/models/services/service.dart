@@ -147,6 +147,19 @@ getmostliked() async {
   }
 }
 
+//fetching Hot articles
+gethotarticle() async {
+  var response = await http.get(
+    Uri.parse('${Api.baseUrl}/hot-article/'),
+  );
+  if (response.statusCode == 200) {
+    List iyoo = json.decode(utf8.decode(response.bodyBytes));
+    return iyoo;
+  } else {
+    return null;
+  }
+}
+
 //fetching articles and story
 gettransaction() async {
   var response = await http.get(

@@ -105,6 +105,7 @@ class _HomePageState extends State<HomePage> {
     var mostViews = context.watch<ApiCalls>().mostviews;
     var random = context.watch<ApiCalls>().randomly;
     var mostLiked = context.watch<ApiCalls>().mostliked;
+    var hot = context.watch<ApiCalls>().hotarticle;
     var doctor = context.watch<ApiCalls>().allDoctors;
     List doctors = doctor.take(5).toList();
     var articles = context.watch<ApiCalls>().articles;
@@ -119,8 +120,7 @@ class _HomePageState extends State<HomePage> {
     List foods =
         articles.where((element) => element['label'] == 'chakula').toList();
     List food = foods.take(10).toList();
-    List hot = articles.take(10).toList();
-    hot.sort((a, b) => b['views'].compareTo(a['views']));
+
     return Scaffold(
       backgroundColor: const Color(0xffFFFFFF),
       appBar: AppBar(
@@ -996,10 +996,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsPage()));
-                },
+                onTap: hot.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NewsPage()));
+                      },
                 child: const Padding(
                   padding: const EdgeInsets.only(right: 20.0, top: 20),
                   child: Text(
@@ -1016,121 +1020,150 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 15,
           ),
-          CarouselSlider.builder(
-              itemCount: 5,
-              itemBuilder: (context, index, realIndex) => Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl:
-                            '${Api.baseUrl}/images/articles/Front-Page-Stock-Image-Low-resolution-1-1.png',
-                        imageBuilder: (context, imageProvider) => Container(
-                          margin: EdgeInsets.all(15),
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.amber,
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover)),
-                        ),
-                        placeholder: (context, url) => Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/logo.jpg'))),
-                        ),
-                      ),
-                      Container(
-                        // color: Colors.amber,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+          hot.isEmpty
+              ? Center(
+                  child: Lottie.asset(
+                    'assets/loader.json',
+                    width: 100,
+                    height: 100,
+                  ),
+                )
+              : CarouselSlider.builder(
+                  itemCount: hot.length,
+                  itemBuilder: (context, index, realIndex) => GestureDetector(
+                        onTap: () {
+                          final data = context.read<ApiCalls>();
+                          data.fetchview(hot[index]['id'].toString());
+                          data.fetcharticles();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsDetails(
+                                        data: hot[index],
+                                      )));
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
-                              style: TextStyle(
-                                fontFamily: 'Manane',
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff262626), // Color(0xff0071e7),
+                            CachedNetworkImage(
+                              imageUrl: '${hot[index]['image']}',
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                margin: EdgeInsets.all(15),
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    //color: Colors.amber,
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover)),
+                              ),
+                              placeholder: (context, url) => Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage('assets/logo.jpg'))),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.messenger,
-                                  size: 15,
-                                  color: Color(0xff0071e7),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '1 comments',
-                                  style: TextStyle(
-                                    fontFamily: 'Manane',
-                                    fontSize: 10,
-
-                                    color:
-                                        Color(0xff262626), // Color(0xff0071e7),
+                            Container(
+                              // color: Colors.amber,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    // 'watoto wote peponi maana twende wotenili tule mkate ila kesho usije ',
+                                    hot[index]['title'],
+                                    style: TextStyle(
+                                      fontFamily: 'Manane',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(
+                                          0xff262626), // Color(0xff0071e7),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Icon(
-                                  Icons.remove_red_eye,
-                                  size: 15,
-                                  color: Color(0xff0071e7),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '150 views',
-                                  style: TextStyle(
-                                    fontFamily: 'Manane',
-                                    fontSize: 10,
-
-                                    color:
-                                        Color(0xff262626), // Color(0xff0071e7),
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                ),
-                              ],
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 4),
+                                        child: Icon(
+                                          Icons.messenger,
+                                          size: 15,
+                                          color: Color(0xff0071e7),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        '${NumberFormat.compact().format(hot[index]['comments'].length)} comments',
+                                        style: TextStyle(
+                                          fontFamily: 'Manane',
+                                          fontSize: 10,
+
+                                          color: Color(
+                                              0xff262626), // Color(0xff0071e7),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Icon(
+                                        Icons.remove_red_eye,
+                                        size: 15,
+                                        color: Color(0xff0071e7),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        '${NumberFormat.compact().format(hot[index]['views'])} views',
+                                        style: TextStyle(
+                                          fontFamily: 'Manane',
+                                          fontSize: 10,
+
+                                          color: Color(
+                                              0xff262626), // Color(0xff0071e7),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-              options: CarouselOptions(
-                height: 120,
-                viewportFraction: 1.0,
-                enableInfiniteScroll: false,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    activeIndex = index;
-                  });
-                },
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedSmoothIndicator(
-                activeIndex: activeIndex,
-                count: 5,
-                effect: WormEffect(
-                  dotWidth: 10,
-                  dotHeight: 10,
-                  activeDotColor: Color(0xff0071e7),
+                      ),
+                  options: CarouselOptions(
+                    height: 120,
+                    viewportFraction: 1.0,
+                    enableInfiniteScroll: false,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        activeIndex = index;
+                      });
+                    },
+                  )),
+          hot.isEmpty
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedSmoothIndicator(
+                      activeIndex: activeIndex,
+                      count: hot.length,
+                      effect: WormEffect(
+                        dotWidth: 10,
+                        dotHeight: 10,
+                        activeDotColor: Color(0xff0071e7),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
           SizedBox(
             height: 5,
           ),
