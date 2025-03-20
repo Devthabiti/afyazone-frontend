@@ -110,13 +110,8 @@ class _HomePageState extends State<HomePage> {
     var phamacy = context.watch<ApiCalls>().phamacy;
     var story = context.watch<ApiCalls>().story;
     var doctor = context.watch<ApiCalls>().allDoctors;
+    var food = context.watch<ApiCalls>().food;
     List doctors = doctor.take(5).toList();
-    var articles = context.watch<ApiCalls>().articles;
-    //list all caterogies
-
-    List foods =
-        articles.where((element) => element['label'] == 'chakula').toList();
-    List food = foods.take(10).toList();
 
     return Scaffold(
       backgroundColor: const Color(0xffFFFFFF),
@@ -1533,10 +1528,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Food()));
-                },
+                onTap: food.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Food()));
+                      },
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
@@ -1572,7 +1569,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         final data = context.read<ApiCalls>();
                         data.fetchview(food[index]['id'].toString());
-                        data.fetcharticles();
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(

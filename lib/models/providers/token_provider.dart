@@ -105,6 +105,14 @@ class ApiCalls extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Provider ya kufetch food and fruit
+  var food = [];
+  fetchFood() async {
+    food = await getfood();
+
+    notifyListeners();
+  }
+
   //Provider ya kufetch ads
   var matangazo = [];
   fetchads() async {
