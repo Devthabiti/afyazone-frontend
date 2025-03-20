@@ -37,14 +37,16 @@ class _SplashPageState extends State<SplashPage>
     data.fetchMagonjwa();
     data.fetchStory();
     data.fetchFood();
-    // data.fetchUserDetails();
-    // data.fetchDoctor();
-    // data.fetchInbox();
-    // data.fetcharticles();
-    // data.fetchtransaction();
-    // //data.fetchads();
 
-    // context.read<ApiCalls>().userID();
+    // hizi za clients
+    data.fetchUserDetails();
+    data.fetchDoctor();
+    data.fetchInbox();
+    data.fetcharticles();
+    data.fetchtransaction();
+    //data.fetchads();
+
+    context.read<ApiCalls>().userID();
 
     _controller = AnimationController(
       duration: Duration(milliseconds: _text.length * 200), // Adjust speed here

@@ -26,15 +26,15 @@ class _ClientNavState extends State<ClientNav> {
   // na api niziweke kwenye context yaan providers
   @override
   void initState() {
-    final data = context.read<ApiCalls>();
-    data.fetchUserDetails();
-    data.fetchDoctor();
-    data.fetchInbox();
-    data.fetcharticles();
-    data.fetchtransaction();
-    //data.fetchads();
+    // final data = context.read<ApiCalls>();
+    // data.fetchUserDetails();
+    // data.fetchDoctor();
+    // data.fetchInbox();
+    // data.fetcharticles();
+    // data.fetchtransaction();
+    // //data.fetchads();
 
-    context.read<ApiCalls>().userID();
+    // context.read<ApiCalls>().userID();
     pageController = PageController();
     super.initState();
   }
