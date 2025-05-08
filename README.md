@@ -1,16 +1,36 @@
-# afya
+# AfyaZone Frontend
 
-A new Flutter project.
+This is the **Flutter-based frontend** for **AfyaZone** — a modern mobile health platform that allows users to access health articles, connect with doctors, and interact with a digital pharmacy. This app consumes APIs provided by the [`afyazone-backend`](https://github.com/your-username/afyazone-backend) (built with Django REST Framework).
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📱 Key Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🏥 Browse health articles (including 18+ categories)
+- 👩‍⚕️ View and chat with online/offline doctors
+- 💊 Explore pharmacy products and categories
+- ❤️ Love & Sex, Food & Fruits, and Disease awareness sections
+- 🔐 Role-based login for patients and doctors
+- 🗂 Dynamic localization (multilingual support)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ⚙️ Tech Stack
+
+- **Flutter 3.x**
+- **Dart**
+- **Provider** (state management)
+- **Easy Localization**
+- **HTTP** (API calls)
+- **Shared Preferences** (local storage)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/afyazone-frontend.git
+cd afyazone-frontend
+
