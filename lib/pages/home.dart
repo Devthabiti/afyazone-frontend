@@ -1176,13 +1176,6 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    size: 25,
-                    color: Color(0xff262626),
-                  )),
             ],
           ),
 

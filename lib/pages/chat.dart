@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:afya/messages/inbox.dart';
+import 'package:afya/pages/doctors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
@@ -103,7 +104,12 @@ class _ChatPageState extends State<ChatPage> {
                       height: 15,
                     ),
                     GestureDetector(
-                      // onTap: _submit,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorsPage()));
+                      },
                       child: Container(
                         height: 40,
                         width: 120,

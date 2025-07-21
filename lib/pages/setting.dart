@@ -278,43 +278,43 @@ class _SettingState extends State<Setting> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    deleteMoadal();
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 20),
-                          child: Text(
-                            'Delete Account',
-                            style: TextStyle(
-                              color: Color(0xff262626),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 10, bottom: 20),
-                          child: Text(
-                            'You can request to delete your accoount',
-                            style: TextStyle(
-                              color: Color(0xff262626).withOpacity(0.7),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     deleteMoadal();
+                //   },
+                //   child: Container(
+                //     color: Colors.white,
+                //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                //     width: double.infinity,
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Padding(
+                //           padding: const EdgeInsets.only(left: 20, top: 20),
+                //           child: Text(
+                //             'Delete Account',
+                //             style: TextStyle(
+                //               color: Color(0xff262626),
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 14,
+                //             ),
+                //           ),
+                //         ),
+                //         Padding(
+                //           padding: const EdgeInsets.only(
+                //               left: 20, top: 10, bottom: 20),
+                //           child: Text(
+                //             'You can request to delete your accoount',
+                //             style: TextStyle(
+                //               color: Color(0xff262626).withOpacity(0.7),
+                //               fontSize: 12,
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 GestureDetector(
                   onTap: () async {
                     SharedPreferences prefs =

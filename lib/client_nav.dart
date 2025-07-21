@@ -26,8 +26,8 @@ class _ClientNavState extends State<ClientNav> {
   // na api niziweke kwenye context yaan providers
   @override
   void initState() {
-    // final data = context.read<ApiCalls>();
-    // data.fetchUserDetails();
+    final data = context.read<ApiCalls>();
+    data.fetchUserDetails();
     // data.fetchDoctor();
     // data.fetchInbox();
     // data.fetcharticles();
