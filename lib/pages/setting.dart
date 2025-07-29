@@ -124,7 +124,7 @@ class _SettingState extends State<Setting> {
                 // ),
                 GestureDetector(
                   onTap: () {
-                    String number = '+255777048047';
+                    String number = '+255785093999';
                     final url = 'https://wa.me/$number';
                     launchUrl(Uri.parse(url));
                   },
